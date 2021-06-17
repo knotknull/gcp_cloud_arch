@@ -153,6 +153,132 @@ https://cloud.google.com/certification/guides/professional-cloud-architect/
 ## Getting Started with GCP
 ## 
 
+
+# GCP Resource Heirarchy
+
+Org Node > Folders > Projects > Resources
+
+NOTE: Policies can be defined at any level (or even individual resource i.e. buckets)
+  - Policies are inherited downward
+
+
+All GCP Services associated with a project.
+    - resource belongs to exactly 1 project
+    - projects can have different owners and users (billed / managed separately)
+
+
+    Project ID              Project Name          Project Number
+    ----------             ---------------        ---------------
+ - Globally unique        - Not unique            - Globally unique
+ - Chosen by user         - Chosen by user        - Assigned by GCP
+ - Immutable              - Mutable               - Immutable 
+
+
+- Folders group projects
+- Folders can contain project or other folders / both
+- Use folders to assign policies
+NOTE:  Resources in folder inherit IAM policies from folder
+
+- Folders need an Org Node at top of heirarchy 
+
+Organization Node is Root Node for Google Cloud Resources
+
+Main Roles of Organization Node:
+  - Organization Policy Administrator:  Broad Control over all cloud resources
+  - Project Creator:  Fine grained control of project creation 
+
+
+GCP project will belong to Organization Node of G-Suite Domain customers
+
+IAM Resource Heirarchy 
+  - Policy set on a resource 
+      - Each policy contains set of roles and role members
+  - Resources inhereit policies from parent
+      - Resources policies are a union of parent and resource
+  - A less restrictive parent policy overrides a more restrictive resource policy
+
+NOTE: Policies at higher level can't take away access at lower level 
+
+
+
+# IAM: Identity and Access Management
+
+IAM: who can take action on specific resources 
+
+Who  <--->   Can Do What  <--->   On Which Resource
+
+
+Who:  Google Account, Google Group, Service Account, G-Suite, Cloud Identity Domain
+
+Can Do Whan:  IAM Role, collection of permissions
+    Permissions grouped together into Role
+
+
+3 Types of Roles:
+  - Primitive 
+      - apply to project and affect all resources in that project
+      Primitive Roles:
+          - Owner    >> manage roles / perms on resource, setup billing
+          - Editor   >> change state
+          - Viewer   >> view
+          - Billing Admin
+          NOTE: Project can have multiple owners, editors, viewers, bill admin
+
+  - Pre-defined
+      - apply to GCP service in a project 
+
+  - Custom
+    NOTE: Custom roles can only be used at project or org level, NOT folder level 
+
+
+
+# IAM Roles
+
+  - Custom
+    NOTE: Custom roles can only be used at project or org level, NOT folder level 
+
+ Service Account:  control server to server interaction 
+    - provide identity for server-to-server interatction in project
+    - used to authenticate from one service to another
+    - control privileges used by resources
+    - Identified w/ email address
+        PROJECT_NUMBER-compute@developer.gserviceaccount.com
+        PROJECT_ID@appspot.gserviceaccount.com
+    - use crypto keys to access resources
+i.e.  
+  VM to write to cloud storage (use service acct)
+
+  NOTE: Google manages keys for Compute Engine and App Engine
+
+  - Can assing predefined or custom IAM role to service account
+
+  Identity              IAM Role                    Resource
+  Service Account     InstanceAdmin Role          Compute Instance
+
+Service Account also a resource
+
+- Different groups of VMs can be granted different identities
+- Can change perms of service account without recreating VM
+
+
+# Interacting with GCP
+  - Console 
+  - Cloud Shell / SDK 
+  - Mobile App
+  - REST
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Virtual Machines in the Cloud
 ## 
 
