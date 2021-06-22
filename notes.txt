@@ -317,6 +317,41 @@ Control GCP resource with client libraries:
 ## Virtual Machines in the Cloud
 ## 
 
+# Cloud Marketplace (formerly Cloud Launcher)
+  Google Computer == VM
+
+
+# Virtual Private Cloud (VPC) Network
+  - Each VPC network containted in a GCP Project
+  - Connect resources to each other and internet 
+      - segment networks
+      - firewall rules
+      - static routes
+NOTE: VPC Networks have GLOBAL scope
+      - subnets are regional
+
+┌────────────────────────────────────────────────────MyVPC───────────────────────────────────────────────┐
+│                                                                                                        │
+│    ┌───────────────────────────────────────────────us-east-1───────────────────────────────────┐       │
+│    │                                                                                           │       │
+│    │                  ┌─────────us-east-1b─────────┐        ┌──────────us-east-1c────────┐     │       │
+│    │   ┌────────────┐ │                            │        │                            │     │       │
+│    │   │my-subnet-1 ├─┼────────────────────────────┼────────┼────────────────────────────┤     │       │
+│    │   └────────────┘ │                            │        │                            │     │       │
+│    │ 10.0.0.0/24      │     [VM]                   │        │       [VM]                 │     │       │
+│    │                  │                            │        │                            │     │       │
+│    │                  └────────────────────────────┘        └────────────────────────────┘     │       │
+│    │                        10.0.0.2                                10.0.0.3                   │       │
+│    │                                                                                           │       │
+│    └───────────────────────────────────────────────────────────────────────────────────────────┘       │
+│                                                                                                        │
+└────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+NOTE: - VPCs are Global 
+      - subnets can span zones that make up a region 
+      - can dynamically change range of IP address in subnet (does not effect provisioned VMs)
+
+
 ## Storage in the Cloud
 ## 
 
