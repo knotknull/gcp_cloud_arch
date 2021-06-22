@@ -210,7 +210,7 @@ Who  <--->   Can Do What  <--->   On Which Resource
 
 Who:  Google Account, Google Group, Service Account, G-Suite, Cloud Identity Domain
 
-Can Do Whan:  IAM Role, collection of permissions
+Can Do What:  IAM Role =  collection of permissions
     Permissions grouped together into Role
 
 
@@ -218,8 +218,8 @@ Can Do Whan:  IAM Role, collection of permissions
   - Primitive 
       - apply to project and affect all resources in that project
       Primitive Roles:
-          - Owner    >> manage roles / perms on resource, setup billing
-          - Editor   >> change state
+          - Owner    >> manage roles / perms on resource, remove members, delete projects, setup billing
+          - Editor   >> change state: deploy apps, modify code, configure services
           - Viewer   >> view
           - Billing Admin
           NOTE: Project can have multiple owners, editors, viewers, bill admin
@@ -245,15 +245,18 @@ Can Do Whan:  IAM Role, collection of permissions
         PROJECT_NUMBER-compute@developer.gserviceaccount.com
         PROJECT_ID@appspot.gserviceaccount.com
     - use crypto keys to access resources
-i.e.  
-  VM to write to cloud storage (use service acct)
+    i.e.  
+        VM to write to cloud storage (use service acct)
+        NOTE: Google manages keys for Compute Engine and App Engine
 
-  NOTE: Google manages keys for Compute Engine and App Engine
-
-  - Can assing predefined or custom IAM role to service account
+    - Can assign predefined or custom IAM role to service account
 
   Identity              IAM Role                    Resource
-  Service Account     InstanceAdmin Role          Compute Instance
+  -------------------     ----------------------         -------------------
+  | Service Account | ->> | InstanceAdmin Role | ->>     |Compute Instance |
+  -------------------     ----------------------         -------------------
+NOTE: Service Account authenticate using keys 
+      Can assign predefinted / custom IARM Roles to Service Account
 
 Service Account also a resource
 
@@ -263,15 +266,47 @@ Service Account also a resource
 
 # Interacting with GCP
   - Console 
+      - Web-based admin UI
+      - Manage / Create projects
+      - Access to GCP APIs
+      - Access to Cloud Shell
+         - temp VM w/ Google Cloud SDK installed
+
   - Cloud Shell / SDK 
+      - CLI for Cloud Platform products and services
+          - gcloud, gsutil (Cloud Storage), bq (BigQuery)
+    NOTE: Can install Cloud SDK on other computers, laptop, etc. 
+          Available as a docker image
+
   - Mobile App
+      - Examine and manage resources in GCP 
+      - Build dashboards
+
   - REST
+      - Programmatic acess to products and services 
+          - Typically use JSON as interchange format
+          - Use OAuth 2.0 for auth / auth
+
+      - Enabled through the GCP Console
+        NOTE: GCP Console can turn on / off APIs 
+          
+      - Most APIs include daily quoats and rates (limits) 
+            - Can be raised by request
+          
+      - Experiment via API Explorer
+            - Interactive tools to try APIs
+
+Control GCP resource with client libraries:
+    - Cloud Client Libraries
+        - Community owned libraries 
+    - Google API  Client Libraries
+        - Open source, generated
+        - Languages: Java, Python, JavaScript, PHP, .Net, Go, Node.js, Ruby, Objective-C, Dart
 
 
-
-
-
-
+# Cloud Marketplace (formerly Cloud Launcher)
+  - Solution marketplace containing pre-packaged, ready-to-deploy solutions
+        - offered by Google and 3rd Party Vendors
 
 
 
