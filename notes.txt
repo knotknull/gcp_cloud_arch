@@ -4,7 +4,8 @@ Channels > My Channels > GCP Cloud Architect
 22 Hours
 List of courses:
 
-# Google Cloud Platform Fundamentals - Core Infrastructure:
+#############################################################################
+## Google Cloud Platform Fundamentals - Core Infrastructure:
  ✓ Introducing Google Cloud Platform
  ✓ Getting Started with GCP
  ✓ Virtual Machines in the Cloud
@@ -15,21 +16,24 @@ List of courses:
  ✓ Big Data and Machine Learning in the Cloud
  ✓ Summary / review
 
-# Essential Cloud Infrastructure: Foundation
+#############################################################################
+## Essential Cloud Infrastructure: Foundation
  - Introduction
  - Introduction to GCP
  - Virtual Networks
  - Virtual Machines 
  - Course Resources
 
-# Essential Google Cloud Infrastructure: Core Services
+#############################################################################
+## Essential Google Cloud Infrastructure: Core Services
  - Introduction
  - Cloud IAM
  - Storage and Database Services
  - Resource Management
  - Resource Monitoring
 
-# Essential Google Cloud Infrastructure: Scaling and Automation
+#############################################################################
+## Essential Google Cloud Infrastructure: Scaling and Automation
  - Introduction
  - Interconnecting Networks 
  - Load Balancing and Autoscaling
@@ -37,7 +41,8 @@ List of courses:
  - Managed Services
  - Course Resources
 
-# Reliable Google Cloud Infrastructure: Design and Process
+#############################################################################
+## Reliable Google Cloud Infrastructure: Design and Process
  - Introduction
  - Defining Services
  - Microservice Design and Architecture
@@ -50,13 +55,15 @@ List of courses:
  - Maintenance and Monitoring
  - Course Resources
 
-# Architecting with Google Kubernetes Engine - Foundations
+#############################################################################
+## Architecting with Google Kubernetes Engine - Foundations
  - Introduction
  - Introduction to Google Cloud
  - Introduction to Containers and Kubernetes
  - Kubernetes Architecture
 
-# Preparing for the Google Cloud Professional Cloud Architecture Exam
+#############################################################################
+## Preparing for the Google Cloud Professional Cloud Architecture Exam
  - Welcome to Preparing for the Professional Cloud Architecture Exam
  - Sample Case Studies
  - Designing and Implementing
@@ -135,10 +142,10 @@ https://cloud.google.com/certification/guides/professional-cloud-architect/
   - Translate
 
 
+############################################
 ## Introducing Google Cloud Platform
-##
 
-# GCP Regions and Zones 
+## GCP Regions and Zones 
 
 - Multi-Region (Europe) >> Region (europe-west2) >> Zone (europe-west2a, europe-west2b, europe-west2c)
 - Zone: deployment area for GCP resources
@@ -150,11 +157,11 @@ https://cloud.google.com/certification/guides/professional-cloud-architect/
 
 
 
+##################################### 
 ## Getting Started with GCP
-## 
 
 
-# GCP Resource Heirarchy
+## GCP Resource Heirarchy
 
 Org Node > Folders > Projects > Resources
 
@@ -201,7 +208,7 @@ NOTE: Policies at higher level can't take away access at lower level
 
 
 
-# IAM: Identity and Access Management
+## IAM: Identity and Access Management
 
 IAM: who can take action on specific resources 
 
@@ -232,7 +239,7 @@ Can Do What:  IAM Role =  collection of permissions
 
 
 
-# IAM Roles
+## IAM Roles
 
   - Custom
     NOTE: Custom roles can only be used at project or org level, NOT folder level 
@@ -264,7 +271,7 @@ Service Account also a resource
 - Can change perms of service account without recreating VM
 
 
-# Interacting with GCP
+## Interacting with GCP
   - Console 
       - Web-based admin UI
       - Manage / Create projects
@@ -304,7 +311,7 @@ Control GCP resource with client libraries:
         - Languages: Java, Python, JavaScript, PHP, .Net, Go, Node.js, Ruby, Objective-C, Dart
 
 
-# Cloud Marketplace (formerly Cloud Launcher)
+## Cloud Marketplace (formerly Cloud Launcher)
   - Solution marketplace containing pre-packaged, ready-to-deploy solutions
         - offered by Google and 3rd Party Vendors
 
@@ -314,14 +321,14 @@ Control GCP resource with client libraries:
 
 
 
+####################################### 
 ## Virtual Machines in the Cloud
-## 
 
-# Cloud Marketplace (formerly Cloud Launcher)
+## Cloud Marketplace (formerly Cloud Launcher)
   Google Computer == VM
 
 
-# Virtual Private Cloud (VPC) Network
+## Virtual Private Cloud (VPC) Network
   - Each VPC network containted in a GCP Project
   - Connect resources to each other and internet 
       - segment networks
@@ -351,9 +358,143 @@ NOTE: - VPCs are Global
       - subnets can span zones that make up a region 
       - can dynamically change range of IP address in subnet (does not effect provisioned VMs)
 
+## Compute Engine
 
+- Run VMs on GCP
+- Create with:
+  - GCP Console
+  - gcloud CLI
+- Run Linux / Windows Server
+- Can create custom VM
+- Pick GPU
+
+Persistent storage:
+  - Standard
+  - SSD
+     - Local SSD for scratch space (ephemeral storage)
+
+- Define startup script & meta data
+- snapshot of VM disks
+
+
+Pricing :
+- per second billing, sustained use discounts
+- Preemptible instances
+- High throughput to storate / no extra cost
+- Custom machine types:
+    - only pay for hardware needed
+
+
+Scale Up / Out 
+  - Autoscaling
+
+Scale Up: 96 CPUs / 624 GB
+
+
+## VPC Capabilities 
+
+VPC have routing tables
+  - forward traffic within network
+      - across subnets
+      - between GCP zones
+      - no external IP address required
+  - built-in
+
+VPC provide global distributed firewall
+  - firewall rules via metadata tags on compute engine instance
+     i.e. traffic for 80 / 443 can route to compute engines tagged with "web"
+
+VPC belongs to Project
+  - VPC Peering allows traffic between two VPCs in different projects
+  - Shared VPC: utilize IAM to control what is shared between VPCs
+
+Cloud Load Balancing
+  - HTTP / HTTPS / TCP / SSL / UDP
+  - single anycast IP fronts all backend instances
+  - traffic goes over Google backbone
+  - Cross region load balancing
+  - Multi-region fail over
+
+
+Google VPC Load Balancing Options
+
+Global            Global            Global TCP          Regional           Regional 
+HTTP(S)           SSL Pooxy         Proxy                                   Internal
+---------------   ----------------  -------------       ---------------     ----------------
+Layer 7 load      Layer 4 load      Layer 4 load       Load balancing       Load balancing  
+balancing based   balancing of      balancing of        of any traffic      of traffic 
+on load           non-HTTPS SSL     non-SSL TCP         ( TCP, UPD)         inside a VPC
+                  traffic based on  Traffic
+                  load
+---------------   ----------------  -------------       ---------------     ----------------
+Can route           Supported on    Supported on        Supported on any    Use for the 
+different URLS to   specific port   specific port       port number         inerntal tiers
+different back      numbers         numbers                                 of multi-tier 
+ends                                                                        applications
+
+Cloud DNS:  8.8.8.8
+  - manage via Console, gloud CLI and RESTful API
+
+
+Cloud CDN 
+  - Global edge caches
+  - CDN Interconnect: use another cloud provider CDN
+
+Connection Options:
+
+VPN    :  multi-Gbps over VPN tunnels
+
+Direct   
+Peering:  Private  connection between you and google 
+
+Carrier   
+Peering:  connection thru largest parner netowrk
+
+Dedicated   
+Interconnect:  N x 10G Transport circuit
+
+
+
+
+
+
+####################################### 
 ## Storage in the Cloud
-## 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Containers in the Cloud
 ## 
