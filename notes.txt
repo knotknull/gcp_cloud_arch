@@ -462,31 +462,179 @@ Interconnect:  N x 10G Transport circuit
 ## Storage in the Cloud
 
 
+## Cloud Storage
+  - binary large object storage
+    - high performance 
+    - simple admin / no capacity management
+
+ - key is URL to storage
+ - not a file system
+ - made of buckets
+ - Objects are Immutable
+    - Can turn on object versioning
+
+ - Data encrypted at rest / encrypted in transit via HTTPS
+
+
+Buckets:
+  - globally unique name
+  - specify geographic area where stored
+  - default storage class (?)
+
+  - IAM Policies / Access Control Lists
+        ACL:  Scope + permissions
+
+
+
+## Cloud Storage Classes
+
+  Mult-regional: high performance 
+                 costs more
+                 geo redundant: 
+                    broad location (US  or EU)
+                    two copies at least 160km apart 
+                 frequently accessed data: website, etc.
+                 SLA: 99.95%
+
+  Regional     : high performance 
+                 specific GCP region (US-Central-1, etc.)
+                 cheaper than multi-regional 
+                 less redundancy
+                 used to store data near GCE or GKE
+                 SLA: 99.90%
+
+  Nearline:   backup 
+              SLA: 99.00%
+              low cost 
+              infrequently accessed data / 1x per mo. or less
+              SLA: 99.00%
+
+  Coldline:   archival 
+              SLA: 99.00%
+              low cost / highly durable 
+              data archiving / online backup / DR
+              infrequently accessed data / 1x per yr or less
+              min. 90 day minimum storage duration
+              SLA: 99.00%
+
+Data Ingress:
+  Online Transfer:  
+      -   CLI or drag/drop
+
+  Storage Transfer Service: 
+      -  scheduled managed batch service
+
+  Transfer Appliance: 
+      - rackable appliances to ship data
+      - 1 PB of data
+
+  Big Query: 
+      - import / export tables
+
+  App Engine: 
+      - logs, backups, object storage 
+
+  Cloud SQL : 
+      - import / export tables
+
+  Compute Engine: 
+      - startup scripts, images, object storage
+
+
+gsutil:  Google Storage CLI Utility
+
+
+## Cloud Bigtable 
+  - Fully managed NoSQL / scalable
+  - wide-column database 
+  - terabyte apps
+  - sparsely populated columns
+    - billions of rows 
+    - thousands of columns
+  - single lookup key / persistent hash table
+  - low latency, high throughput: read and write
+
+Accessed vy HBase API
+   - Natively compatible w/ big data / Hadoop ecosystems
+
+Data encrypted in-flight / at rest
+   -Control access via IAM
+
+Bigtable powers:  Google Analytics, GMail, Search
+
+Access Patterns:
+  - API      :   HBase Client
+  - Streaming:   via Cloud Dataflow Streaming, Spark Streaming, Storm
+  - Batch    :   Read / write data via MapReduce, Dataflow, Spark 
+
+
+## Cloud SQL 
+  - Fully managed RDBMS (DBaaS) 
+      - MySQL 
+      - PosgreSQL Beta 
+  - Transactions
+  - TBs of data
+  - Provide replica services: read, failover, etc
+  - managed backups (on demand, scheduled)
+  - vertical   scaling (read / write)
+  - horizontal scaling (read)
+
+
+
+## Cloud Spanner 
+  - horizontally scalable RDBMS 
+  - strong global consistency 
+  - managed services w/ HA
+  - SQL queries
+  - Automatic replication
+  - PetaBytes capacity
+
+
+## Cloud Datstore 
+  - horizontally scalable NoSQL DB 
+  - structured data from App Engine apps
+  - handles sharding / replication
+  - supports transactions
+  - free daily quota
+  - SQL queries
+
+
+                Cloud                   Bigtable              Cloud                 Cloud                 Cloud                   Big
+                Datastore                                     Storage               SQL                   Spanner                 Query
+
+Type            NoSQL                     NoSQL               Blobstore             Relational            Relational              Relational
+                Document                  Wide column                               SQL for OLTP          SQL for OLTP            SQL for OLTP
+
+Transactions     Yes                     Single-row            No                      Yes                  Yes                   No 
+
+Complex Queries  No                       No                   No                      Yes                  Yes                   Yes 
+
+Capacity         TB+                      PB+                  PB+                     TB                   PB                    PB+ 
+
+Unit size       1 MB/entity         10MB/Cell, 100MB/row       5TB/Object        Determined by engine       10,240MB/row         10 MB/row
+
+Best For    semi-strcutred          flat data, heavy r/w      binary, object      web frameworks          large scale db (>2TB)   interacitve querying
+            durable key-value         analytical data
+
+Use Cases    App Engine Apps        AdTech, IoT data        Images, media         user creds              high I/O                data warehousing 
+                                      Financial               backups             customer orders         global consistency      
+
+
+
+
+NOTE: env variable $DEVSHELL_PROJECT_ID contains unique project id.
+
+
+ex. gsutil ls gs://$DEVSHELL_PROJECT_ID
 
 
 
 
 
+LAST HERE:  Do qwiklabs Google storage and Cloud SQL
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Lab: GCP Fundamentals: Getting Started with Cloud Storage and Cloud SQL
 
 
 
