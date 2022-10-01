@@ -1,25 +1,26 @@
-GCP Cloud Architect
+GCP Certified Professional Cloud Architect
 ---------------------------------
 Channels > My Channels > GCP Cloud Architect
 22 Hours
 List of courses:
-
+NOTE:  This course has been updated to 8 Video Courses / 26h 26m  
 #############################################################################
 ## Google Cloud Platform Fundamentals - Core Infrastructure:
- ✓ Introducing Google Cloud Platform
- ✓ Getting Started with GCP
- ✓ Virtual Machines in the Cloud
- ✓ Storage in the Cloud
- ✓ Containers in the Cloud
- ✓ Applications in the Cloud
- ✓ Developing, Deploying and Monitoring in the Cloud
- ✓ Big Data and Machine Learning in the Cloud
- ✓ Summary / review
+ - Introducing Google Cloud Platform
+ - Resources and Access in the Cloud
+ - Virtual Machines and Networks in the Cloud
+ - Storage in the Cloud
+ - Containers in the Cloud
+ - Applications in the Cloud
+ - Developing and Deploying in the Cloud
+ - Logging and Monitoring in the Cloud
+ - Course Summary
+ ✓ Example of a Checked Off Entry
 
 #############################################################################
 ## Essential Cloud Infrastructure: Foundation
  - Introduction
- - Introduction to GCP
+ - Interacting with Google Cloud
  - Virtual Networks
  - Virtual Machines 
  - Course Resources
@@ -27,10 +28,11 @@ List of courses:
 #############################################################################
 ## Essential Google Cloud Infrastructure: Core Services
  - Introduction
- - Cloud IAM
+ - Identity and Access Management (IAM)
  - Storage and Database Services
  - Resource Management
  - Resource Monitoring
+ - Course Resources
 
 #############################################################################
 ## Essential Google Cloud Infrastructure: Scaling and Automation
@@ -51,31 +53,49 @@ List of courses:
  - Google Cloud and Hybrid Network Architecture
  - Deploying Applications to Google Cloud
  - Designing Reliable Systems
- - Securing
+ - Security
  - Maintenance and Monitoring
  - Course Resources
 
 #############################################################################
-## Architecting with Google Kubernetes Engine - Foundations
+## Getting Started with Google Kubernetes Engine 
  - Introduction
  - Introduction to Google Cloud
  - Introduction to Containers and Kubernetes
  - Kubernetes Architecture
 
 #############################################################################
-## Preparing for the Google Cloud Professional Cloud Architecture Exam
- - Welcome to Preparing for the Professional Cloud Architecture Exam
- - Sample Case Studies
+## Logging, Monitoring and Observability in Google Cloud
+ - Introduction
+ - Introduction to Monitoring in Google CLoud
+ - Avoiding Customer Pain
+ - Alerting Policies
+ - Monitoring Critical Systems
+ - Configuring Google Cloud Services for Observability
+ - Advanced Loging and Analysis
+ - Monitoring Network Security and Audit Logs
+ - Managing Incidents
+ - Investigating Application Performance Issues
+ - Optimize the Costs of Monitoring
+ - Course Resources
+
+#############################################################################
+## Preparing for the Professional Cloud Architect Exam
+ - Welcome to Preparing for the Professional Cloud Architect Exam
+ - Sample Case Studies 
  - Designing and Implementing
  - Optimizing and Operating
  - Resources and next steps
+ - Course Resources
 
 
 
 ## Links
 ########################### 
+- Professional Cloud Architect 
+https://cloud.google.com/certification/cloud-architect
 
-- Professional Cloud Architect Exam Guie
+- Professional Cloud Architect Exam Guide
 https://cloud.google.com/certification/guides/professional-cloud-architect/
 
 - Professional Cloud Architect Sample Questions
@@ -111,9 +131,101 @@ https://cloud.google.com/certification/guides/professional-cloud-architect/
 
 
 
+
+##~~ ----------------------------  NEW NOTES START HERE  ---------------------------- ~~##
+
 ##########################################################################
 ## Google Cloud Platform Fundamentals - Core Infrastructure: 
 ##########################################################################
+
+############################################
+## Introducing Google Cloud 
+  Cloud Waves
+    - First  Wave: Colocation
+    - Second Wave: Virtualized Data Center
+    - Third  Wave: Container-based architecture
+
+## Iaas / PaaS / SaaS 
+  IaaS:  Infrastructure As A Service 
+    - pay for what they allocate
+
+  PaaS:  Platform As A Service 
+    - pay for what they use
+
+  Serverless: 
+    - concentrate on code / not managing infrastructure 
+      - Cloud Functions
+      - Cloud Run: deploy containerized microservice in fully managed environment
+
+  SaaS:  Software as a Service
+        - Gmail, Docs, Drive
+
+## Google Cloud Network
+  100+ content caching nodes worldwide
+  5 Major GeoLocations: N. America, S. America, EU, Asia, Australia
+
+  Location > Regions > Zones
+  London:
+    Europe -> europe-west2 -> europe-west2-a  
+                              europe-west2-b
+                              europe-west2-c
+  multi-region support:
+    Cloud Storage -> Europe -> London / Belgium 
+        Stores in multiple regions, redundantly in 2 geolocations 160km apart
+
+  ** 103 Zones
+  ** 34 Regions
+  cloud.google.com/about/locations
+
+## Security
+  - Hardware infrastructure
+  - Service deployment:  encrypted RPC
+  - User Identtity 
+  - Storage Services: encryption at rest
+  - Internet Communication :   Google Front End  
+                               Denial of Service Proection
+  - Operational Security   :   Intrusion Detection
+                               Reducing insider risk
+                               Universal Second Factor (U2F) 
+                               Software Dev Practices
+
+## Open Source Ecosystem
+  - Open Sources Licenses key technology i.e. Tensor Flow
+
+## Pricing and Billing
+  - Per second billing
+  - Compute Engine:  sustained-use discounts
+    - discount for more thatn 25% of month
+
+  - Budgets
+      assigned at billing account or project level
+  - Alerts 
+  - Reports 
+  - Quotas (on resource @ project level)
+    - rate quota      :  Rests after a specific time
+    - allocation quota:  number of resources in a project
+            ex.  5 VPC networks
+cloud.google.com/products/calculator
+
+
+############################################
+## Resources and Access in the Cloud
+
+
+LAST HERE
+
+
+ - Virtual Machines and Networks in the Cloud
+ - Storage in the Cloud
+ - Containers in the Cloud
+ - Applications in the Cloud
+ - Developing and Deploying in the Cloud
+ - Logging and Monitoring in the Cloud
+ - Course Summary
+ ✓ Example of a Checked Off Entry
+
+##~~ ----------------------------  NEW NOTES END   HERE  ---------------------------- ~~##
+
 - Compute
   - Compute Engine
   - Kubernetes Engine
@@ -143,7 +255,7 @@ https://cloud.google.com/certification/guides/professional-cloud-architect/
 
 
 ############################################
-## Introducing Google Cloud Platform
+## Introducing Google Cloud 
 
 ## GCP Regions and Zones 
 
@@ -637,8 +749,20 @@ LAST HERE:  Do qwiklabs Google storage and Cloud SQL
 Lab: GCP Fundamentals: Getting Started with Cloud Storage and Cloud SQL
 
 
+internal
+10.128.0.2
+
+external
+104.198.255.97
+
+SQL public IP
+34.132.218.103
+
+connection name:
+qwiklabs-gcp-03-a86083db6d3c:us-central1:blog-db
 
 
+https://storage.googleapis.com/qwiklabs-gcp-03-a86083db6d3c/my-excellent-blog.png
 
 
 
@@ -646,6 +770,14 @@ Lab: GCP Fundamentals: Getting Started with Cloud Storage and Cloud SQL
 
 ## Containers in the Cloud
 ## 
+
+
+
+
+
+
+
+
 
 ## Applications in the Cloud
 ## 
