@@ -211,6 +211,13 @@ cloud.google.com/products/calculator
 ############################################
 ## Resources and Access in the Cloud
 
+# Google Cloud Resource Heirarchy
+# Identity and Access Management
+# Service Accounts
+# Cloud Identity
+# Interacting with Google Cloud
+# Getting Started with Qwiklabs
+# Lab: Google Cloud Fundamentals
 
 LAST HERE
 
