@@ -211,15 +211,74 @@ cloud.google.com/products/calculator
 ############################################
 ## Resources and Access in the Cloud
 
-# Google Cloud Resource Heirarchy
+# Google Cloud Resource Heirarchy  ( Org > Folder > Project > Resource )
+    Organization Node
+      |
+       ->Folder  
+           |
+           |--------------------|
+           |                    |
+           -> Project            -> Project
+                 |                    |              
+                 -> Resources         -> Resources
+
+Policies can be applied at Project / Folder / Organization level as well as Resource
+** NOTE: Policies inherited downward
+        ex. Apply policy to folder, policy is inherited by Project
+
+- Projects 
+  - Separate entities under Org Node
+  - Projects hold resources
+      ** NOTE: RESOURCE CAN ONLY BELONG TO ONE PROJECT 
+  - Projects can have different owners / users 
+      - billed and managed separately
+
+
+    Project ID                    Project Name          Project Number
+    ----------                   ---------------        ---------------
+ - Globally unique              - Not unique            - Globally unique
+ - Assigned by Google Cloud *   - Chosen by user        - Assigned by GCP
+ - Immutable after creation     - Mutable               - Immutable 
+
+
+* = mutable during cration
+
+Resource Manager Tool
+ - API (RPC / REST) CRUD / List Projects 
+
+
+- Folders
+    - Assign policies to resources at granularity  
+    - Folders can contain projects and other folders
+
+
+- Organization Node (different roles)
+  - Org Policy Administrator
+  - Project Creator Role
+  - Google Workspace Customer 
+      - Projects will belong to Organization Node
+  - Non-Google Workspace Customer 
+      - Use Cloud Identity to create Orginization node
+
+
 # Identity and Access Management
+LAST HERE
+
+
+
+
+
+
+
+
+
+
 # Service Accounts
 # Cloud Identity
 # Interacting with Google Cloud
 # Getting Started with Qwiklabs
 # Lab: Google Cloud Fundamentals
 
-LAST HERE
 
 
  - Virtual Machines and Networks in the Cloud
