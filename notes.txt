@@ -6,7 +6,7 @@ List of courses:
 NOTE:  This course has been updated to 8 Video Courses / 26h 26m  
 #############################################################################
 ## Google Cloud Platform Fundamentals - Core Infrastructure:
- - Introducing Google Cloud Platform
+ ✓  Introducing Google Cloud Platform
  - Resources and Access in the Cloud
  - Virtual Machines and Networks in the Cloud
  - Storage in the Cloud
@@ -262,194 +262,60 @@ Resource Manager Tool
 
 
 # Identity and Access Management
-LAST HERE
+
+ - Apply policies: who can do what on which resources
+
+who:  google account, google group, service account, cloud identity domain
+can do what:  role 
+    - role == collection of permissions
+
+role / policy inherits downward:  folder -> project -> resources
 
 
+** 3 Cloud IAM Role Types:
+  - Basic:       Owner, Editor, Viewer, Billing Admin  (broad permissions)
+  - Predefined:  Services offer predefined roles and where they can be used:
+                  - Compute Engine >>   Instance Admin Role                 
+  - Custom:      Least privileged model, more granular role
+              i.e. Instance Operator:  get, list, start, stop   (No Create / Delete)
 
-
-
-
-
-
+          NOTE:  Custom Roles can only be applied to Project or Organization Level
 
 
 # Service Accounts
-# Cloud Identity
-# Interacting with Google Cloud
-# Getting Started with Qwiklabs
-# Lab: Google Cloud Fundamentals
 
-
-
- - Virtual Machines and Networks in the Cloud
- - Storage in the Cloud
- - Containers in the Cloud
- - Applications in the Cloud
- - Developing and Deploying in the Cloud
- - Logging and Monitoring in the Cloud
- - Course Summary
- ✓ Example of a Checked Off Entry
-
-##~~ ----------------------------  NEW NOTES END   HERE  ---------------------------- ~~##
-
-- Compute
-  - Compute Engine
-  - Kubernetes Engine
-  - App Engine
-  - Cloud Functions 
-
-- Storage
-  - Bigtable
-  - Cloud Storage
-  - Cloud SQL
-  - Cloud Spanner
-  - Cloud Datastore
-
-- Big Data
-  - Big Query 
-  - Pub/Sub
-  - Data flow
-  - Data proc
-  - Data lab
-
-- Big Data
-  - Natural Language API
-  - Vision API
-  - Machine Learning
-  - Speach API
-  - Translate
-
-
-############################################
-## Introducing Google Cloud 
-
-## GCP Regions and Zones 
-
-- Multi-Region (Europe) >> Region (europe-west2) >> Zone (europe-west2a, europe-west2b, europe-west2c)
-- Zone: deployment area for GCP resources
-    NOTE: Zone not necessarily corresponds to single physical building
-  - Zones grouped into regions <5ms round trip between zones within region
-  zone == single failure domain within a region
-  25 Cloud Regions
-  76 Zones Regions
-
-
-
-##################################### 
-## Getting Started with GCP
-
-
-## GCP Resource Heirarchy
-
-Org Node > Folders > Projects > Resources
-
-NOTE: Policies can be defined at any level (or even individual resource i.e. buckets)
-  - Policies are inherited downward
-
-
-All GCP Services associated with a project.
-    - resource belongs to exactly 1 project
-    - projects can have different owners and users (billed / managed separately)
-
-
-    Project ID              Project Name          Project Number
-    ----------             ---------------        ---------------
- - Globally unique        - Not unique            - Globally unique
- - Chosen by user         - Chosen by user        - Assigned by GCP
- - Immutable              - Mutable               - Immutable 
-
-
-- Folders group projects
-- Folders can contain project or other folders / both
-- Use folders to assign policies
-NOTE:  Resources in folder inherit IAM policies from folder
-
-- Folders need an Org Node at top of heirarchy 
-
-Organization Node is Root Node for Google Cloud Resources
-
-Main Roles of Organization Node:
-  - Organization Policy Administrator:  Broad Control over all cloud resources
-  - Project Creator:  Fine grained control of project creation 
-
-
-GCP project will belong to Organization Node of G-Suite Domain customers
-
-IAM Resource Heirarchy 
-  - Policy set on a resource 
-      - Each policy contains set of roles and role members
-  - Resources inhereit policies from parent
-      - Resources policies are a union of parent and resource
-  - A less restrictive parent policy overrides a more restrictive resource policy
-
-NOTE: Policies at higher level can't take away access at lower level 
-
-
-
-## IAM: Identity and Access Management
-
-IAM: who can take action on specific resources 
-
-Who  <--->   Can Do What  <--->   On Which Resource
-
-
-Who:  Google Account, Google Group, Service Account, G-Suite, Cloud Identity Domain
-
-Can Do What:  IAM Role =  collection of permissions
-    Permissions grouped together into Role
-
-
-3 Types of Roles:
-  - Primitive 
-      - apply to project and affect all resources in that project
-      Primitive Roles:
-          - Owner    >> manage roles / perms on resource, remove members, delete projects, setup billing
-          - Editor   >> change state: deploy apps, modify code, configure services
-          - Viewer   >> view
-          - Billing Admin
-          NOTE: Project can have multiple owners, editors, viewers, bill admin
-
-  - Pre-defined
-      - apply to GCP service in a project 
-
-  - Custom
-    NOTE: Custom roles can only be used at project or org level, NOT folder level 
-
-
-
-## IAM Roles
-
-  - Custom
-    NOTE: Custom roles can only be used at project or org level, NOT folder level 
-
- Service Account:  control server to server interaction 
-    - provide identity for server-to-server interatction in project
-    - used to authenticate from one service to another
-    - control privileges used by resources
-    - Identified w/ email address
+ Give permissions to a resource and NOT a person
+  - named with email address
         PROJECT_NUMBER-compute@developer.gserviceaccount.com
         PROJECT_ID@appspot.gserviceaccount.com
-    - use crypto keys to access resources
-    i.e.  
-        VM to write to cloud storage (use service acct)
-        NOTE: Google manages keys for Compute Engine and App Engine
+  - use cryptographic keys (instead of passwords)
 
-    - Can assign predefined or custom IAM role to service account
+** NOTE: Service Accounts NEED TO BE MANAGED
 
-  Identity              IAM Role                    Resource
-  -------------------     ----------------------         -------------------
-  | Service Account | ->> | InstanceAdmin Role | ->>     |Compute Instance |
-  -------------------     ----------------------         -------------------
-NOTE: Service Account authenticate using keys 
-      Can assign predefinted / custom IARM Roles to Service Account
-
-Service Account also a resource
-
-- Different groups of VMs can be granted different identities
-- Can change perms of service account without recreating VM
+Service Account is a resource
+  - can have IAM Policies attached to it 
+      i.e. Editor (read / write)  vs. Viewer (read)
 
 
-## Interacting with GCP
+# Cloud Identity 
+
+  Tool for organizations to define policies and manage users and groups w/ Google Admin Console
+
+ - Can log in and manage resources with existing Active Directory or LDAP systems
+ - Google Admin Console can disable user accounts and remove from groups
+ - Available in free / premium editions
+ - Already available to Google Workspace customers in Google Admin Console
+
+
+# Interacting with Google Cloud
+
+4 Ways to Interact w/ GCP
+  1. Cloud Console
+  2. Cloud SDK / Cloud Shell
+  3. APIs
+  3. Cloud Console Mobile App
+
+
   - Console 
       - Web-based admin UI
       - Manage / Create projects
@@ -457,17 +323,19 @@ Service Account also a resource
       - Access to Cloud Shell
          - temp VM w/ Google Cloud SDK installed
 
+
   - Cloud Shell / SDK 
       - CLI for Cloud Platform products and services
-          - gcloud, gsutil (Cloud Storage), bq (BigQuery)
+**        - gcloud:  Main CLI for Google Cloud
+          - gsutil: CLI for Cloud Storage 
+          - bq (BigQuery): CLI for Big Query 
     NOTE: Can install Cloud SDK on other computers, laptop, etc. 
           Available as a docker image
+       Cloud Shell:  CLI access to resources from browser
+              - debian based VM w/ persistent 5 GB home directory   
+              - Cloud SDK utilities always installed 
 
-  - Mobile App
-      - Examine and manage resources in GCP 
-      - Build dashboards
-
-  - REST
+  - APIs / REST
       - Programmatic acess to products and services 
           - Typically use JSON as interchange format
           - Use OAuth 2.0 for auth / auth
@@ -478,32 +346,52 @@ Service Account also a resource
       - Most APIs include daily quoats and rates (limits) 
             - Can be raised by request
           
-      - Experiment via API Explorer
-            - Interactive tools to try APIs
+      - API Explorer
+            - which APIs are available and which versions
 
 Control GCP resource with client libraries:
     - Cloud Client Libraries
         - Community owned libraries 
     - Google API  Client Libraries
         - Open source, generated
-        - Languages: Java, Python, JavaScript, PHP, .Net, Go, Node.js, Ruby, Objective-C, Dart
+        - Languages: Java, Python, C#, C++, JavaScript, PHP, .Net, Go, Node.js, Ruby, Objective-C, Dart
 
 
 ## Cloud Marketplace (formerly Cloud Launcher)
   - Solution marketplace containing pre-packaged, ready-to-deploy solutions
         - offered by Google and 3rd Party Vendors
 
+  - Mobile App
+      - Start, stop and use SSH to connect to Compute Engine instances and see logs
+      - Start, stop Cloud SQL instances
+      - Administer apps deployed on App Engine
+      - Up-to-date billing info for projects & alerts
+      - Graphs w/ key metrics
+      - Alerts & indicent mgmt
+
+cloud.google.com/console-app
+
+
+############################################## 
+## Virtual Machines and Networks in the Cloud
+
+
+## Virtual Private Cloud Networking
 
 
 
 
 
 
-####################################### 
-## Virtual Machines in the Cloud
 
-## Cloud Marketplace (formerly Cloud Launcher)
-  Google Computer == VM
+LAST HERE
+
+
+
+##~~ ----------------------------  NEW NOTES END   HERE  ---------------------------- ~~##
+
+
+
 
 
 ## Virtual Private Cloud (VPC) Network
