@@ -6,8 +6,8 @@ List of courses:
 NOTE:  This course has been updated to 8 Video Courses / 26h 26m  
 #############################################################################
 ## Google Cloud Platform Fundamentals - Core Infrastructure:
- ✓  Introducing Google Cloud Platform
- - Resources and Access in the Cloud
+ ✓ Introducing Google Cloud Platform
+ ✓ Resources and Access in the Cloud
  - Virtual Machines and Networks in the Cloud
  - Storage in the Cloud
  - Containers in the Cloud
@@ -378,51 +378,42 @@ cloud.google.com/console-app
 
 ## Virtual Private Cloud Networking
 
+VPC:  secure, individual, private cloud-computing model hosted within public cloud
 
-
-
-
-
-
-LAST HERE
-
-
-
-##~~ ----------------------------  NEW NOTES END   HERE  ---------------------------- ~~##
-
-
-
-
-
-## Virtual Private Cloud (VPC) Network
-  - Each VPC network containted in a GCP Project
+  - Each VPC network contained in a GCP Project
   - Connect resources to each other and internet 
       - segment networks
       - firewall rules
       - static routes
-NOTE: VPC Networks have GLOBAL scope
-      - subnets are regional
 
-┌────────────────────────────────────────────────────MyVPC───────────────────────────────────────────────┐
-│                                                                                                        │
-│    ┌───────────────────────────────────────────────us-east-1───────────────────────────────────┐       │
-│    │                                                                                           │       │
-│    │                  ┌─────────us-east-1b─────────┐        ┌──────────us-east-1c────────┐     │       │
-│    │   ┌────────────┐ │                            │        │                            │     │       │
-│    │   │my-subnet-1 ├─┼────────────────────────────┼────────┼────────────────────────────┤     │       │
-│    │   └────────────┘ │                            │        │                            │     │       │
-│    │ 10.0.0.0/24      │     [VM]                   │        │       [VM]                 │     │       │
-│    │                  │                            │        │                            │     │       │
-│    │                  └────────────────────────────┘        └────────────────────────────┘     │       │
-│    │                        10.0.0.2                                10.0.0.3                   │       │
-│    │                                                                                           │       │
-│    └───────────────────────────────────────────────────────────────────────────────────────────┘       │
-│                                                                                                        │
-└────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+NOTE: VPC Networks have GLOBAL scope
+      - subnets in any region
+      - subnets can span zones that make up region
+
+Size of subnet can be increased by expanding range of IP Address
+
+
+┌──────────────────────────────────────────MyVPC───────────────────────────────────────────┐
+│                                                                                          │
+│    ┌─────────────────────────────────────us-east-1───────────────────────────────┐       │
+│    │                                                                             │       │
+│    │                  ┌────us-east-1b────┐        ┌────────us-east-1c──────┐     │       │
+│    │   ┌────────────┐ │                  │        │                        │     │       │
+│    │   │my-subnet-1 ├─┼──────────────────┼────────┼────────────────────────┤     │       │
+│    │   └────────────┘ │                  │        │                        │     │       │
+│    │ 10.0.0.0/24      │       [VM]       │        │          [VM]          │     │       │
+│    │                  │                  │        │                        │     │       │
+│    │                  └──────────────────┘        └────────────────────────┘     │       │
+│    │                        10.0.0.2                         10.0.0.3            │       │
+│    │                                                                             │       │
+│    └─────────────────────────────────────────────────────────────────────────────┘       │
+│                                                                                          │
+└──────────────────────────────────────────────────────────────────────────────────────────┘
 
 NOTE: - VPCs are Global 
       - subnets can span zones that make up a region 
       - can dynamically change range of IP address in subnet (does not effect provisioned VMs)
+
 
 ## Compute Engine
 
@@ -442,29 +433,37 @@ Persistent storage:
 - Define startup script & meta data
 - snapshot of VM disks
 
+Cloud Market Place:
+  - pre-configured VMs with software, storage, etc. configured
 
 Pricing :
-- per second billing, sustained use discounts
-- Preemptible instances
+- per second billing / 1 minute minimum
+- sustained use discounts  / > 25% per month
+- committed use discounts
+- Preemptible instances & Spot VM
 - High throughput to storate / no extra cost
 - Custom machine types:
     - only pay for hardware needed
 
 
+## Scaling
 Scale Up / Out 
   - Autoscaling
 
-Scale Up: 96 CPUs / 624 GB
+Scale Up: 128 CPUs / 1024 GB
+  - Max CPUs per VM tied to Family 
+  - Constrained by user quota
 
+cloud.google.com/compute/docs/machine-types
 
-## VPC Capabilities 
+## VPC Compatabilities 
 
 VPC have routing tables
+  - built-in
   - forward traffic within network
       - across subnets
       - between GCP zones
       - no external IP address required
-  - built-in
 
 VPC provide global distributed firewall
   - firewall rules via metadata tags on compute engine instance
@@ -474,12 +473,19 @@ VPC belongs to Project
   - VPC Peering allows traffic between two VPCs in different projects
   - Shared VPC: utilize IAM to control what is shared between VPCs
 
-Cloud Load Balancing
+
+
+
+## Cloud Load Balancing
+  - Fully distributed, software-defined, managed servcie
   - HTTP / HTTPS / TCP / SSL / UDP
   - single anycast IP fronts all backend instances
   - traffic goes over Google backbone
   - Cross region load balancing
   - Multi-region fail over
+  - No "Pre-Warming"
+
+
 
 
 Google VPC Load Balancing Options
@@ -489,7 +495,7 @@ HTTP(S)           SSL Pooxy         Proxy                                   Inte
 ---------------   ----------------  -------------       ---------------     ----------------
 Layer 7 load      Layer 4 load      Layer 4 load       Load balancing       Load balancing  
 balancing based   balancing of      balancing of        of any traffic      of traffic 
-on load           non-HTTPS SSL     non-SSL TCP         ( TCP, UPD)         inside a VPC
+on load           non-HTTPS SSL     non-SSL TCP         ( TCP, UDP)         inside a VPC
                   traffic based on  Traffic
                   load
 ---------------   ----------------  -------------       ---------------     ----------------
@@ -498,6 +504,9 @@ different URLS to   specific port   specific port       port number         iner
 different back      numbers         numbers                                 of multi-tier 
 ends                                                                        applications
 
+
+
+## Cloud DNS / CDN
 Cloud DNS:  8.8.8.8
   - manage via Console, gloud CLI and RESTful API
 
@@ -506,23 +515,39 @@ Cloud CDN
   - Global edge caches
   - CDN Interconnect: use another cloud provider CDN
 
+
+## Connecting Networks  
 Connection Options:
 
-VPN    :  multi-Gbps over VPN tunnels
+IPsec VPN :  multi-Gbps over VPN tunnels
+    - uses Cloud Router 
+    - exchange route info (VPC, other networks) using Border Gateway Protocol
 
-Direct   
-Peering:  Private  connection between you and google 
+Direct  Peering:  Private  connection between you and google 
+    - puts router in same public datacenter as Google Point of Presence (PoP)
+    - ** 100 Points of Presence around world
 
-Carrier   
-Peering:  connection thru largest parner netowrk
+Carrier Peering:  connection thru largest partner netowrk
+    - direct access from on-premise network thru service provider network
+    - NOTE: Not covered by Google SLA
 
-Dedicated   
-Interconnect:  N x 10G Transport circuit
+Dedicated Interconnect:  N x 10G Transport circuit
+    - 1 or more direct, private connections to Google
+    - Covered by up to 99.99% SLA
+    - Can be backed by VPN
+
+Partner Interconnect:  
+    - From On-Prem to VPC via Service Provider
+    - Data center in a location that can't be reached by Dedicated Interconnect 
+    - Useful for < 10GB/sec conneciton
+    - Can be covered by up to 99.99% SLA
 
 
 
 
+LAST HERE
 
+##~~ ----------------------------  NEW NOTES END   HERE  ---------------------------- ~~##
 
 ####################################### 
 ## Storage in the Cloud
