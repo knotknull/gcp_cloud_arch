@@ -660,14 +660,20 @@ gsutil:  Google Storage CLI Utility
 
 
 ## Fire Store 
-
-
-LAST HERE
-
-
-##~~ ----------------------------  NEW NOTES END   HERE  ---------------------------- ~~##
-
-gsutil:  Google Storage CLI Utility
+  - horizontally scalable NoSQL DB 
+   -  Documents and COllections
+  - NoSQL queries
+  - index by default
+  - transaction support
+  - atomic batch operations
+  - strong consistency
+  - automatic mult-region data replication
+  - charged for CRUD operations and data amount
+  - free daily quota **
+    - 50k document reads
+    - 20k document writes
+    - 20k document deletes
+    - 1 GB stored data
 
 
 ## Cloud Bigtable 
@@ -679,6 +685,10 @@ gsutil:  Google Storage CLI Utility
     - thousands of columns
   - single lookup key / persistent hash table
   - low latency, high throughput: read and write
+  - > 1TB semi-structured data
+  - Data fast / high throughput / rapidly changing
+  - data is timeseries
+  - Machine Learning
 
 Accessed vy HBase API
    - Natively compatible w/ big data / Hadoop ecosystems
@@ -695,17 +705,14 @@ Access Patterns:
 
 
 
-## Cloud Datstore 
-  - horizontally scalable NoSQL DB 
-  - structured data from App Engine apps
-  - handles sharding / replication
-  - supports transactions
-  - free daily quota
-  - SQL queries
+
+gsutil:  Google Storage CLI Utility
 
 
-                Cloud                   Bigtable              Cloud                 Cloud                 Cloud                   Big
-                Datastore                                     Storage               SQL                   Spanner                 Query
+
+
+                Firestore                   Bigtable              Cloud                 Cloud                 Cloud                   Big
+                                                                  Storage               SQL                   Spanner                 Query
 
 Type            NoSQL                     NoSQL               Blobstore             Relational            Relational              Relational
                 Document                  Wide column                               SQL for OLTP          SQL for OLTP            SQL for OLTP
@@ -714,7 +721,7 @@ Transactions     Yes                     Single-row            No               
 
 Complex Queries  No                       No                   No                      Yes                  Yes                   Yes 
 
-Capacity         TB+                      PB+                  PB+                     TB                   PB                    PB+ 
+Capacity         TB+                      PB+                  PB+                     30 TB                PB                    PB+ 
 
 Unit size       1 MB/entity         10MB/Cell, 100MB/row       5TB/Object        Determined by engine       10,240MB/row         10 MB/row
 
@@ -733,10 +740,12 @@ NOTE: env variable $DEVSHELL_PROJECT_ID contains unique project id.
 ex. gsutil ls gs://$DEVSHELL_PROJECT_ID
 
 
+LAST HERE
+
+##~~ ----------------------------  NEW NOTES END   HERE  ---------------------------- ~~##
 
 
 
-LAST HERE:  Do qwiklabs Google storage and Cloud SQL
 
 
 Lab: GCP Fundamentals: Getting Started with Cloud Storage and Cloud SQL
