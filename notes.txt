@@ -8,7 +8,7 @@ NOTE:  This course has been updated to 8 Video Courses / 26h 26m
 ## Google Cloud Platform Fundamentals - Core Infrastructure:
  ✓ Introducing Google Cloud Platform
  ✓ Resources and Access in the Cloud
- - Virtual Machines and Networks in the Cloud
+ ✓ Virtual Machines and Networks in the Cloud
  - Storage in the Cloud
  - Containers in the Cloud
  - Applications in the Cloud
@@ -545,68 +545,56 @@ Partner Interconnect:
 
 
 
-LAST HERE
-
-##~~ ----------------------------  NEW NOTES END   HERE  ---------------------------- ~~##
-
 ####################################### 
 ## Storage in the Cloud
 
-
 ## Cloud Storage
-  - binary large object storage
+  - binary large object storage + meta data
     - high performance 
     - simple admin / no capacity management
-
  - key is URL to storage
  - not a file system
+      - online content
+          - video, pictures, audio
+      - backup  / archiving
+      - store intermediate results
  - made of buckets
  - Objects are Immutable
+    - new version for changes
     - Can turn on object versioning
 
  - Data encrypted at rest / encrypted in transit via HTTPS
 
-
-Buckets:
-  - globally unique name
+  Buckets:
+    - globally unique name
   - specify geographic area where stored
-  - default storage class (?)
+
 
   - IAM Policies / Access Control Lists
+
+        IAM:  Inherited from project to bucket to object ( project > bucket > object )
         ACL:  Scope + permissions
 
 
+Lifecycle management policies 
+  - i.e. delete objects older than 365 days
+         3 most recent versions
+
 
 ## Cloud Storage Classes
+ - Standard Storage: hot data:  99.95 / 99.90 SLA
+ - Nearline Storage: infrequently accessed data (1x per month) / SLA 99.0
+ - Coldline Storage: infrequently accessed data (1x per 90 days) / SLA 99.0
+ - Archive Storage : infrequently accessed data (1x per year )
 
-  Mult-regional: high performance 
-                 costs more
-                 geo redundant: 
-                    broad location (US  or EU)
-                    two copies at least 160km apart 
-                 frequently accessed data: website, etc.
-                 SLA: 99.95%
+common characteristics:
+  - unlimited storeage (no min obj size)
+  - worldwide accessibility and locations
+  - low latency / high durability
+  - geo- redundancy
+   - Data encrypted at rest on server / encrypted in transit via HTTPS
 
-  Regional     : high performance 
-                 specific GCP region (US-Central-1, etc.)
-                 cheaper than multi-regional 
-                 less redundancy
-                 used to store data near GCE or GKE
-                 SLA: 99.90%
 
-  Nearline:   backup 
-              SLA: 99.00%
-              low cost 
-              infrequently accessed data / 1x per mo. or less
-              SLA: 99.00%
-
-  Coldline:   archival 
-              SLA: 99.00%
-              low cost / highly durable 
-              data archiving / online backup / DR
-              infrequently accessed data / 1x per yr or less
-              min. 90 day minimum storage duration
-              SLA: 99.00%
 
 Data Ingress:
   Online Transfer:  
@@ -618,6 +606,8 @@ Data Ingress:
   Transfer Appliance: 
       - rackable appliances to ship data
       - 1 PB of data
+
+Data Services:
 
   Big Query: 
       - import / export tables
@@ -631,6 +621,51 @@ Data Ingress:
   Compute Engine: 
       - startup scripts, images, object storage
 
+
+gsutil:  Google Storage CLI Utility
+
+
+## Cloud SQL 
+  - Fully managed RDBMS (DBaaS) 
+      - MySQL 
+      - PosgreSQL Beta 
+      - SQL Server
+  - Transactions
+  - TBs of data
+  - Provide replica services: read, failover, etc
+  - managed backups (on demand, scheduled)
+  - vertical   scaling (read / write)
+  - horizontal scaling (read)
+
+**  64 processor cores
+** 400 GB RAM
+**  30 TB Storage
+
+- automatic replicatin
+- managed backups, covers 7 backups
+- encrypts data
+- includes network firewall
+- Accessible by other Google Cloud services
+
+
+## Cloud Spanner 
+  - horizontally scalable RDBMS 
+  - strong global consistency 
+  - managed services w/ HA
+  - SQL queries
+  - Automatic replication
+  - DBs > 2 TB
+  - PetaBytes capacity
+  - High number of IOPS
+
+
+## Fire Store 
+
+
+LAST HERE
+
+
+##~~ ----------------------------  NEW NOTES END   HERE  ---------------------------- ~~##
 
 gsutil:  Google Storage CLI Utility
 
@@ -658,27 +693,6 @@ Access Patterns:
   - Streaming:   via Cloud Dataflow Streaming, Spark Streaming, Storm
   - Batch    :   Read / write data via MapReduce, Dataflow, Spark 
 
-
-## Cloud SQL 
-  - Fully managed RDBMS (DBaaS) 
-      - MySQL 
-      - PosgreSQL Beta 
-  - Transactions
-  - TBs of data
-  - Provide replica services: read, failover, etc
-  - managed backups (on demand, scheduled)
-  - vertical   scaling (read / write)
-  - horizontal scaling (read)
-
-
-
-## Cloud Spanner 
-  - horizontally scalable RDBMS 
-  - strong global consistency 
-  - managed services w/ HA
-  - SQL queries
-  - Automatic replication
-  - PetaBytes capacity
 
 
 ## Cloud Datstore 
