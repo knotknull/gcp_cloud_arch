@@ -9,7 +9,7 @@ NOTE:  This course has been updated to 8 Video Courses / 26h 26m
  ✓ Introducing Google Cloud Platform
  ✓ Resources and Access in the Cloud
  ✓ Virtual Machines and Networks in the Cloud
- - Storage in the Cloud
+ ✓ Storage in the Cloud
  - Containers in the Cloud
  - Applications in the Cloud
  - Developing and Deploying in the Cloud
@@ -740,41 +740,79 @@ NOTE: env variable $DEVSHELL_PROJECT_ID contains unique project id.
 ex. gsutil ls gs://$DEVSHELL_PROJECT_ID
 
 
+####################################### 
+## Containers in the Cloud
+
+ - Independent workload scalability
+ - OS and hardware abstraction layer
+
+OS is virtualized 
+ - code and dependencies in a container
+ - limited access to own file system / hardware
+ - scales like PaaS but flexible like IaaS
+
+## Kubernetes 
+ - GKE (Google Kubernetes Engine) -> Kubernetes
+ - platform for managing containerizedworkloads / services
+ - scale up / down/ rollout / rollback 
+ - APIs to deploy dontainers to set of nodes (called a cluster)
+ - Components run control plane and nodes run containers
+
+ - pod: smallest unit in kubernetes to create / deploy
+   - represents a running process
+
+Usually one container per pod
+  - multiple containers can share a pod to share resources, etc.
+
+NOTE: use kubectl to interact with kubernetes
+Deployment can run part a component of an application or an entire application 
+
+list of running pods
+> kubectl get pods
+
+this is a deployed local Load Balancer
+> kubectl expose deployments nginx -- port=80 --type=LoadBalancer
+
+Services is an abstraction, defines logical set of pods and abstraction
+> kubectl get services
+
+
+Services is an abstraction, defines logical set of pods and abstraction
+  - increase pods when CPU utilization has increased
+> kubectl scale
+
+Update new version of app
+> kubectl rollout
+
+
+## Google Kubernetes Engine (GKE)
+- managed kubernetes in cloud
+  Compute Engine instances into a Cluster
+
+ - Created by console or g-cloud command
+ - deploy / manage applications 
+ - perrom admin tasks
+ - setup Policies
+ - Monitor workload
+
+# Advanced cluster management features
+ - load balancing for Compute Engine instances
+ - Node pools to designamte subsets of nodes within cluster
+ - Auto scaling / upgrades
+ - Auto reapir
+ - Logging Monitoring
+
+
+> gcloud container clusters create k1
+
+
+## Hybrid and multi-cloud
+TODO:  write in notebook
+
+
 LAST HERE
 
 ##~~ ----------------------------  NEW NOTES END   HERE  ---------------------------- ~~##
-
-
-
-
-
-Lab: GCP Fundamentals: Getting Started with Cloud Storage and Cloud SQL
-
-
-internal
-10.128.0.2
-
-external
-104.198.255.97
-
-SQL public IP
-34.132.218.103
-
-connection name:
-qwiklabs-gcp-03-a86083db6d3c:us-central1:blog-db
-
-
-https://storage.googleapis.com/qwiklabs-gcp-03-a86083db6d3c/my-excellent-blog.png
-
-
-
-
-
-## Containers in the Cloud
-## 
-
-
-
 
 
 
