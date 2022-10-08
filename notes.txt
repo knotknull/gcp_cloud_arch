@@ -753,9 +753,9 @@ OS is virtualized
 
 ## Kubernetes 
  - GKE (Google Kubernetes Engine) -> Kubernetes
- - platform for managing containerizedworkloads / services
+ - platform for managing containerized workloads / services
  - scale up / down/ rollout / rollback 
- - APIs to deploy dontainers to set of nodes (called a cluster)
+ - APIs to deploy containers to set of nodes (called a cluster)
  - Components run control plane and nodes run containers
 
  - pod: smallest unit in kubernetes to create / deploy
@@ -797,7 +797,7 @@ Update new version of app
 
 # Advanced cluster management features
  - load balancing for Compute Engine instances
- - Node pools to designamte subsets of nodes within cluster
+ - Node pools to designate subsets of nodes within cluster
  - Auto scaling / upgrades
  - Auto reapir
  - Logging Monitoring
@@ -866,18 +866,108 @@ Update new version of app
                                                                   └───────────────────────────┘
 
 
-
-
 cloud.google.com/anthos
-
-
-TODO:  write in notebook
-
-
 
 
 ####################################### 
 ## Applications in the Cloud
+
+
+## App Engine
+ - Fully managed, serverless platform for developing / hosting web applications at scale
+  app engine -> [languages, libraries, frameworks] -> servers (no servers to provision)
+
+ Eclipse, IntelliJ, Maven Git, Jenkins, PyCharm
+
+Built-in Services & APIs  
+  - NoSQL datastore     - Health Checks
+  - Memcache            - Applicaton Logging
+  - Load balancing      - User Auth API 
+
+SDK: 
+  - APIs and libraries
+  - Sandbox environment
+  - Deployment tools
+        - SDK manages app locally, Google Cloud Console manages in production
+
+Cloud Console:
+   - Create new apps
+   - Configure domain names
+   - Change which verson is live
+   - Review access and error logs
+   - Security Command Center scand for vulnerabilities
+
+
+## App Engine Environments
+ Standard vs. Flexible
+
+  - Standard:
+      - container instances running on Google infrastructure 
+      - pre-configured runtime with standardized list of languages 
+        - Persistent storage w/ queries, sorting, transactions
+        - Automatic caling and load balancing
+        - Asynchronous task queues for performing work outside of scope of request
+        - Scheduled tasks for triggering events at specific times / intervals
+        - Integration with Google Cloud Services and APIs
+    Requirements:
+      - Use specificed versions of Java, Python, PHP, Go, Node.js and Ruby
+      - Apps must conform to sandbox constraints, dependent on runtime
+
+
+  - Flexible:
+      -  Docker containers on Compute Engine VMs
+      -  App Engine runs Compute Engines
+         - instances health-checked, healed, co-located 
+         - Critical, backward-compatible updates are automatically applied to underlying OS
+         - VM instances are automatically located by geographic region according to project settings
+         - VM instances are restarted on weekly basis
+
+      -  Supports
+          - Microservices                       - Search
+          - Authorization                       - Versioning
+          - SQL & NoSQL databases               - Security Scanning
+          - Traffic splitting                   - Memcache
+          - Logging                             - Contend Delivery Networks
+
+      -  Customize runtime and OS:  Python, Java, Go, Node.js, PHP, .Net and Ruby
+      -  Provide custom Docker Image / Docker FIle
+
+
+                                    Standard Env                          Flexible Env
+Instance startup                    Seconds                                 Minutes
+SSH access                          No                                      Yes (not default)
+Write to local disk                 No (some read/write to /tmp)            Yes, ephemeral (disk initialized on VM startup)
+Support for 3rd-party binaries      Certain languages                       Yes
+Network access                      via App Engine services                 Yes
+Pricing Models                      After free tier, pay per instances      Pay for resource allocation per hour, no auto shutdown
+                                    class w/ auto shutdown
+
+
+
+App Engine vs. GKE ??
+
+App Engine: give environment max control on deployment and scaling
+GKE : give app owner full flex of kubernetes
+
+App Engine Standard   <-> App Engine Flexible  <-> GKE
+
+## Google Cloud API Management
+
+  Cloud Endpoints  <-->  API  <--> Apigee Edge
+   - management tools for Google's API
+
+  Cloud Endpoints: 
+    - Distributed API management system 
+    - Provide API console, hosting logging, monitoring and other features
+    - Use with any APIs that support the OpenApi Spec
+    - Supports apps running in App Engine, GKE, Compute Engine
+    - Clients:  Android, iOS, Javascript
+
+
+  Apigee Edge: 
+    - specific focus on business problems, like rate limiting, quotas and analytics
+    - backend services for Apigee Edge don't need to be in Google Cloud
+
 
 
 LAST HERE
