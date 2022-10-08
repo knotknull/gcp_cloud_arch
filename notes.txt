@@ -10,7 +10,7 @@ NOTE:  This course has been updated to 8 Video Courses / 26h 26m
  ✓ Resources and Access in the Cloud
  ✓ Virtual Machines and Networks in the Cloud
  ✓ Storage in the Cloud
- - Containers in the Cloud
+ ✓ Containers in the Cloud
  - Applications in the Cloud
  - Developing and Deploying in the Cloud
  - Logging and Monitoring in the Cloud
@@ -791,7 +791,7 @@ Update new version of app
 
  - Created by console or g-cloud command
  - deploy / manage applications 
- - perrom admin tasks
+ - perform admin tasks
  - setup Policies
  - Monitor workload
 
@@ -807,20 +807,82 @@ Update new version of app
 
 
 ## Hybrid and multi-cloud
+
+ - move parts of processing to cloud while keeping rest on premise
+
+
+## Anthos
+
+ - hybrid and multi-cloud solution
+ - framework rests on kubernetes and GKE on-prem
+ - tools for monitoring and maintaining
+    - on prem, in cloud, multi-cloud
+
+ - GKE on-prem
+    - turnkey, production grade version of Kubernetes
+    - service mesgh (Anthos, Istio)
+    - single pane of glass dashboard for entire environment
+
+
+
+
+┌─────────────────────────────────────────────────────────────────┐                         ┌───────────────────────────────────────────────────────────────┐
+│                                                                 │                         │                                                               │
+│ Google Cloud                                                    │                         │  On-Premise Data Center                                       │
+│                                                                 │                         │                                                               │
+│      ┌────────────────────┐                                     │                         │                                                               │
+│      │ GKE Dashboard      │                                     │                         │                                   ┌────────────────────┐      │
+│      │ Centralized UI     │                                     │                         │                                   │                    │      │
+│      │                    │                                     │                         │                                   │  Policy Repository │      │
+│      └────────────────────┘                                     │           ┌─────────────┼──────────────────────────────────►│  Store Policy      │      │
+│                                                                 │           │             │                                   │   (git)            │      │
+│                                                                 │           │             │                                   └─────────────────┬──┘      │
+│                ┌────────────────────────────────────────────────┼───────────|             │                                                     │         │
+│                │                                                │           │             │                                                     │         │
+│   ┌────────────┼─────────────────────────────────────────────┐  │           │             │    ┌────────────────────────────────────────────────┼───────┐ │
+│   │            │                                             │  │           │             │    │                                                │       │ │
+│   │  ┌─────────▼──────────┐       ┌──────────────────────┐   │  │   ┌───────┴────────┐    │    │    ┌──────────────────────┐    ┌───────────────▼────┐  │ │
+│   │  │ Anthos Config      │       │                      │   │  │   │ Cloud          │    │    │    │                      │    │ Anthos Config      │  │ │
+│   │  │ Management         │       │ Anthos Service Mesh  ◄───┼──┼───┤ Interconnect   ├────┼────┼────► Istio Service Mesh   │    │ Management         │  │ │
+│   │  │ Sync Policy        │       │                      │   │  │   │                │    │    │    │    Open Source       │    │ Sync Policy        │  │ │
+│   │  │                    │       └──────────────────────┘   │  │   └────────────────┘    │    │    └──────────────────────┘    │                    │  │ │
+│   │  └────────────────────┘                                  │  │                         │    │                                └─────────┬──────────┘  │ │
+│   │                                                          │  │                         │    │                                          │             │ │
+│   │    ┌────────────────────────────────────────────┐        │  │                         │    │       ┌──────────────────────────────────▼───────┐     │ │
+│   │    │                                            │        │  │    ┌────────────────┐   │    │       │                                          │     │ │
+│   │    │     Google Kubernetes Engine               │        │  │    │ Cloud          │   │    │       │    GKE On-Premises                       │     │ │
+│   │    │                                            │◄───────┼──┼────┤ Marketplace    ├───┼────┼──────►│                                          │     │ │
+│   │    │                                            │        │  │    │ 3rd Party Int  │   │    │       │                                          │     │ │
+│   │    └────────────────────┬───────────────────────┘        │  │    └────────────────┘   │    │       └──────────────────────────────────────────┘     │ │
+│   │                         │                                │  │                         │    │                                                        │ │
+│   └─────────────────────────┼────────────────────────────────┘  │                         │    └────────────────────────────────────────────────────────┘ │
+│                             │                                   │                         │                                                               │
+└─────────────────────────────┼───────────────────────────────────┘                         └─────────────────────────────────┼─────────────────────────────┘
+                              │                                                                                               │
+                              │                                                                                               │
+                              │                                   ┌───────────────────────────┐                               │
+                              │                                   │    Operations             │                               │
+                              └──────────────────────────────────►│  Logging & Monitoring     │ ◄─────────────────────────────┘
+                                                                  └───────────────────────────┘
+
+
+
+
+cloud.google.com/anthos
+
+
 TODO:  write in notebook
 
 
-LAST HERE
 
+
+####################################### 
+## Applications in the Cloud
+
+
+LAST HERE
 ##~~ ----------------------------  NEW NOTES END   HERE  ---------------------------- ~~##
 
-
-
-
-
-
-## Applications in the Cloud
-## 
 
 ## Developing, Deploying and Monitoring in the Cloud
 ## 
