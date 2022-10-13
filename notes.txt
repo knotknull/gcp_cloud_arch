@@ -969,17 +969,69 @@ App Engine Standard   <-> App Engine Flexible  <-> GKE
     - specific focus on business problems, like rate limiting, quotas and analytics
     - backend services for Apigee Edge don't need to be in Google Cloud
 
-## Cloud Run
+## Cloud Run  (think Lambda)
+ - Managed compute platform that can run stateless containers 
+      via web requests / pub-sub events
+ - Serverless
+ - Built on Knative, an open API and runtime environment built on Kubernetes
+      Note: Knative let's you run on Cloud Run or GKE
+ - Automatically scale up and down from zero almost instantaneously
+      - charges only for resources used, nearest 100ms
+
+  container-based workflow:
+    1. write code
+          - app should start server that listens for web requests
+    2. build and package container image
+    3. Push image to Artifact Registry
+            https: URL returned back
+
+  NOTE: Cloud Run then starts your container on demand to handle requests.
+        All incoming requests are handled by dynamically adding and removing containers.
+
+
+  source-based workflow:
+    1. write and deploy code
+    2. Buildpacks builds and packages to container 
+
+
+Application is exposted on a sub-domain of ***.run.app domain or use own custom domain
+
+Cloud Run handles:
+  - creating SSL certificate
+  - configuring SSL termination w/ secure settings
+  - handling incoming requests, decrypting and handing off to app
+
+       https://***.run.app     +-----------------------------------------------------+
+       https://your.domain     |                 Cloud Run                           | 
+client  -------HTTPS----->     |  [Cloud Run Proxy]  ---HTTP--->  [ App Container]   | 
+                               |                                                     | 
+                               +-----------------------------------------------------+
+
+Charged only when handling web requests within 100ms, start up and shutdown
+  NOTE:  small fee for every 1MM requests served
+
+
+- Charges increase w/ CPU and Memory
+- Cloud Run can allocate 4 vCPU and 8GB memory
+
+Cloud Run can run any binary that is Linux 64 bit
+  - Java        - PHP
+  - Python      - Go
+  - Node.js     - C++
+  - COBOL       - Haskell
+  - Perl       
+
+
+## Developing, Deploying and Monitoring in the Cloud
+## 
 
 
 LAST HERE
 ##~~ ----------------------------  NEW NOTES END   HERE  ---------------------------- ~~##
 
 
-## Developing, Deploying and Monitoring in the Cloud
-## 
 
-## Big Data and Machine Learning in the Cloud
+## Logging and Monitoring in the Cloud
 ## 
 
 ## Summary / review
