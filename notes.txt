@@ -934,6 +934,7 @@ Cloud Console:
 
 
                                     Standard Env                          Flexible Env
+                                    -------------                         ------------
 Instance startup                    Seconds                                 Minutes
 SSH access                          No                                      Yes (not default)
 Write to local disk                 No (some read/write to /tmp)            Yes, ephemeral (disk initialized on VM startup)
@@ -968,6 +969,7 @@ App Engine Standard   <-> App Engine Flexible  <-> GKE
     - specific focus on business problems, like rate limiting, quotas and analytics
     - backend services for Apigee Edge don't need to be in Google Cloud
 
+## Cloud Run
 
 
 LAST HERE
