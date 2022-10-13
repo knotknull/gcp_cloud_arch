@@ -895,7 +895,7 @@ Cloud Console:
    - Configure domain names
    - Change which verson is live
    - Review access and error logs
-   - Security Command Center scand for vulnerabilities
+   - Security Command Center scans for vulnerabilities
 
 
 ## App Engine Environments
@@ -905,7 +905,7 @@ Cloud Console:
       - container instances running on Google infrastructure 
       - pre-configured runtime with standardized list of languages 
         - Persistent storage w/ queries, sorting, transactions
-        - Automatic caling and load balancing
+        - Automatic scaling and load balancing
         - Asynchronous task queues for performing work outside of scope of request
         - Scheduled tasks for triggering events at specific times / intervals
         - Integration with Google Cloud Services and APIs
