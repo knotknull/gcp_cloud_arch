@@ -1022,17 +1022,50 @@ Cloud Run can run any binary that is Linux 64 bit
   - Perl       
 
 
-## Developing, Deploying and Monitoring in the Cloud
+## Developing and Deploying in the Cloud
 ## 
 
+# Cloud Source Repositories 
+ - full featured git repos hosted on cloud
+    - App Engine, Compute Engine
+ - can have unlimited number of private git repos
+ - Diagnostic Tools:  Debugger, Error Reporting can run against git repos
+ - can source from GitHub, BitBucket
 
-LAST HERE
-##~~ ----------------------------  NEW NOTES END   HERE  ---------------------------- ~~##
 
+# Cloud Functions
+ - Lightwight, event-based, asynchronous compute solutions
+ - create small, simple purpose functions that respond to cloud events 
+   without the need to manage a server or a runtime environment
+ - construct application workflows 
+ - extend cloud services
+ - billed to nearest 100ms, only when code is running
+ - Written in:
+  - Javascript (Node.js)
+  - Python
+  - Go
+ - Executed in a managed Node.js env on Google Cloud
+ - Asynchronous:  Events from Cloud Storage and Pub/Sub
+ - Synchronous :  HTTP Invocation for synchronouse execution
+
+# Deployment: Infrastructure as Code
+# Terraform
+  - Create template using HashiCorp Config Language (HCL)
+  - Terraform uses template to determine actions to create environment
+  - Use Terraform to update env to match change in code
+  - Store / version control templates in Cloud Source Repositories
 
 
 ## Logging and Monitoring in the Cloud
 ## 
+
+
+LAST HERE
+
+
+
+##~~ ----------------------------  NEW NOTES END   HERE  ---------------------------- ~~##
+
 
 ## Summary / review
 ## 
