@@ -11,11 +11,10 @@ NOTE:  This course has been updated to 8 Video Courses / 26h 26m
  ✓ Virtual Machines and Networks in the Cloud
  ✓ Storage in the Cloud
  ✓ Containers in the Cloud
- - Applications in the Cloud
- - Developing and Deploying in the Cloud
- - Logging and Monitoring in the Cloud
+ ✓ Applications in the Cloud
+ ✓ Developing and Deploying in the Cloud
+ ✓ Logging and Monitoring in the Cloud
  - Course Summary
- ✓ Example of a Checked Off Entry
 
 #############################################################################
 ## Essential Cloud Infrastructure: Foundation
@@ -1046,7 +1045,7 @@ Cloud Run can run any binary that is Linux 64 bit
   - Go
  - Executed in a managed Node.js env on Google Cloud
  - Asynchronous:  Events from Cloud Storage and Pub/Sub
- - Synchronous :  HTTP Invocation for synchronouse execution
+ - Synchronous :  HTTP Invocation for synchronous execution
 
 # Deployment: Infrastructure as Code
 # Terraform
@@ -1059,18 +1058,152 @@ Cloud Run can run any binary that is Linux 64 bit
 ## Logging and Monitoring in the Cloud
 ## 
 
+Four Golden Signals (measuring performance/reliability)
+ 1. Latency
+ 2. Traffic
+ 3. Saturation
+ 4. Errors
 
-LAST HERE
+
+# Latency: how long to return result
+ - page load latency              - number of requests waiting for thread
+ - query duration                 - service response time
+ - transaction duration           - time for first response
+ - time to complete data return
 
 
+# Traffic:  how many requests reaching system 
+ - http requests / sec            - requests for static vs. dynamic content
+ - Network I/O                    - # concurrent sessions
+ - # transactions per second      - # of retrievals per second
+ - # of active requests           - # of write ops
+ - # of read ops                  - # of active connections
 
-##~~ ----------------------------  NEW NOTES END   HERE  ---------------------------- ~~##
+
+# Saturation:  How close to capacity a system is
+ - % memory utilization           - % thread pool utilization
+ - % cache utilization            - % disk utilization
+ - % CPU utilization              - disk quota
+ - memory quota                   - # of available connections
+ - # of users on the system 
+
+# Errors:  System failure events
+ - 400/500 HTTP codes             - Wrong answers / incorrect content  
+ - # failed requests              - # exceptions
+ - # stack traces                 - Servers that fail liveness checks
+ - # of dropped connections
+
+# SLI, SLO, SLA
+
+Service Level Indicator:  selected monitoring metrics that measures one aspect of service reliability
+              ratio of 2 numbers:  # of Good Events / Count all Valid Events
+
+Service Level Objective:  combines SLI with target reliability  (generally short of 100%)
+              ex.  99.9%
+              S - Specific 
+              M - Measured
+              A - Achievable
+              R - Relevant
+              T - Time bound
+
+Service Level Agreement:  commitments made to customers that your systems and apps will have only a certain amount of down time.
+      - minimum level of service promised
+      - what happens when promise is broken
+
+# Integrated Observability Tools
+
+
+- Dashboards
+- Metrics Explorer
+- Logs Explorer
+- Service Monitoring 
+- Health Checks
+- Debugger
+- Profiler
+
+## Monitoring Tools
+
+> 1000 streams of metrics data
+
+# Cloud Monitoring: overall health of apps 
+collects: metrics, events, metadata, logs, services, systems, agents, custom code, and 
+          various common app components:
+              - Cassandra, Nginx, Apache, Elasticsearch, others
+
+## Logging Tool
+
+# Cloud Logging: 
+  - collect     - store
+  - search      - analyze
+  - monitor     - alert
+
+Log Analysis:
+ - Logs Explorer 
+ - BigQuery allows querying of log data
+ - Archived logs to Cloud Storage
+
+Log Export:
+ - exported to Cloud Storage
+ - exported as messages to Pub/Sub
+ - exported into BigQuery tables
+ - exported into BigQuery tables
+
+Log Retention:
+  - dependent on type
+  - Data access logs, default = 30 days, max of 3650 days
+  - Admin logs stored default = 400
+  - exported to cloud storage or big query to exend retention 
+
+Log Types:
+  - Cloud Audit Logs
+      - who, what where
+      - admin activity
+      - dat access 
+      - system events
+      - transparency
+
+  - Agent Logs
+      - fluentd agent
+
+  - Network Logs
+      - VPC flow
+      - firewall rules
+      - NAT gateway
+
+  - Service Logs
+      - Standard out / err
+
+
+## Error Reporting / Debugging
+# Error Reporting 
+  -  counts, analyzes, aggregates crashes in running cloud services
+  -  interface w/ sorting / filtering capabilities
+  -  dedicated view: time chart, occurances, first / last seen, etc.
+
+# Debugging
+  -  Debug while running in prod
+  -  collaborate debug session w/ Console URL
+  -  snapshot: production state captured at specific line
+  -  integrates into existing dev workflows
+  -  integrates w/:  Cloud Source Repo, GitHub, Bitbucket,  GitLab
+
+# Cloud Trace
+  -  collects latency data from distributed apps in Google Cloud Console
+        - App Engine, Compute Engine VMs, Kubernetes Engine containers
+  -  generate latency reports
+
+# Cloud Profiler
+  -  CPU and heap picture of app
+  -  analyze anywhere: Google Cloud, other clouds, on-prem
+        -  supports Java, Go, Python, Node.js
+  -  resource consumption via flame graph
 
 
 ## Summary / review
 ## 
 
-
+cloud.google.com/training
+cloud.google.com/certifications
 
 
 
