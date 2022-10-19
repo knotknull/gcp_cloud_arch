@@ -14,7 +14,7 @@ NOTE:  This course has been updated to 8 Video Courses / 26h 26m
  ✓ Applications in the Cloud
  ✓ Developing and Deploying in the Cloud
  ✓ Logging and Monitoring in the Cloud
- - Course Summary
+ ✓ Course Summary
 
 #############################################################################
 ## Essential Cloud Infrastructure: Foundation
@@ -1205,6 +1205,74 @@ Log Types:
 cloud.google.com/training
 cloud.google.com/certifications
 
+
+
+
+##########################################################################
+## Essential Cloud Infrastructure: Foundation 
+##########################################################################
+
+############################################
+## Introducing Google Cloud 
+
+## GCP: 
+ - infrastructure
+ - platform
+ - software
+
+
+<--------------------------   Google Cloud Products and Services  -------------------------->   
+Iaas                                     PaaS                                            SaaS
+
+CPUs, Memory                 Servers                         Clusters              Serverless
+Disks, Interfaces           VM Instances                Cluster Management        Autoscaling
+
+IT Ops                  Sys Ops              Dev Ops               Low Ops             No Ops
+
+
+
+
+## Compute Services
+
+- Compute Engine : IaaS
+- Google Kubernetes Engine (GKE) :  Google managed container environment
+- App Engine     :  Fully Managed PaaS.  Run apps w/ infrastructure managed by Google
+- Cloud Functions:  Functions as a Services.  Serverless execution env.
+- Cloud Run      :  Stateless containers via web request or Pub / Sub events (Serverless, KNative)
+                        can run on google cloud or GKE, resources calculated to 100ms
+
+
+
+
+############################################
+## Interacting with Google Cloud
+
+## Module Overview
+
+# Interacting w/ GCP
+  - Google Cloud Platform Console (Web UI):  console.cloud.google.com
+  - Cloud Shell and Cloud SDK (CLI)       : ex.  > gcloud compute instances list
+                  cloud shell:  browser based shell, temporary VM + 5 GB persistent disk + Cloud SDK
+  - REST-base API (custom apps)
+  - Cloud Mobile App (iOS / Android)
+          - manage vms, db instances, App Engine apps, billing, etc.
+
+# Client libraries / API Interfaces
+
+ - Google Cloud SDK:  gcloud, gsutil, bq
+ - RESTful API:  get, post, put, delete   <-->  JSON
+ - Google Cloud Client Libraries:   Java, Python, Node.js, Ruby, Go, PHP
+
+Cloud Shell: 
+  - gcloud : Compute Engine + Google Cloud Services
+  - gsutil : Cloud Storage
+  - kubectl: GKE + Kubernetes
+  - bq     : Big Query
+
+
+
+## list gcloud regions
+gcloud compute regions list
 
 
 
