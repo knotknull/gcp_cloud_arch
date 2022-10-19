@@ -1274,7 +1274,7 @@ Cloud Shell:
 ## list gcloud regions
 gcloud compute regions list
 
-
+## Projects
 
 
 
