@@ -1276,13 +1276,157 @@ gcloud compute regions list
 
 ## Projects
 
+> New Project > Name > [reate]
+
+- projects can be "shutdown"
+    - stopping services and billing
+    - deletion gets scheduled to happen in the future to allow "undo" 
+    
+switching project contexts in cloud shell
+
+> gcloud config list          # List current project
+> gcloud config set project   # Set project context 
+
+
+############################################
+## Virtual Networks
+
+## Virtual Private Cloud (VPC)
+  - Software Defined Network
+
+VPC Objects:
+- Projects                  - IP Addresses
+- Networks                      - Internal, External, range
+    - Default, auto mode    - Virtual Machines (VMs)
+      custom mode
+- Subnetworks               - Routes
+- Regoins                   - Firewall rules
+- Zones
+
+# Projects  
+ - Associates objects and services w/ billing
+ - Contains networks (up to 5) that can be shared / peered
+
+# Network
+ - No IP address range
+ - Global and spans all regions
+ - contains subnetworks
+ - available as: default, auto, custom
+
+
+# VPC Network Types
+default:
+  - every project 
+  - one subnet per region 
+  - default firewall rules
+
+auto mode:
+  - default network 
+  - one subnet per region 
+  - Regional IP allocation
+  - Fixed /20 subnetwork per region
+  - Expandable to /16
+
+custom mode:
+  - no default subnets created 
+  - Full control of IP ranges
+  - Regional IP allocation
+  - Expandable to IP ranges you specify
+
+
+10.128.0.0/9 CIDR
+
+
+                              +-------------------------------------------->[Internet]
+Networks isolate systems      |                              + ------------------^
+Project                       |                              |
+Network #1      Network #2    |  Network #3      Network #4  |  Network #5      Regions
+  [A]                         +->  [C]              [D]   <--+                 us_east1
+   |                                                                           us-central1
+   |                                                                           us-west
+  [B]                                                                          europe-west1
+                                                                               asia-east1
+
+A and B can communicate though internal IPs
+C and D can communicate though external IPs
+
+ - VPC is global
+
+┌──────────────────────┐             ┌────────────────────────────────────────────────────────────────────────────────────────────┐
+│     On Premises      │             │                                                                                            │
+│                      │             │                                                                     Cloud VPC Network      │
+│                      │────────────────────────────> ┌────────────────┐                                                          │
+│                      │             │                │  VPN           ├────────────────────────────────┐                         │
+└──────────────────────┘             │                │  Gateway       │                                │                         │
+                                     │       ┌────────┴──────┬─────────┴───────┐       ┌────────────────┼────────────────┐        │
+                                     │       │               │                 │       │                │                │        │
+                                     │       │               │                 │       │                │                │        │
+                                     │       │      ┌────────▼─────────┐       │       │      ┌─────────▼────────┐       │        │
+                                     │       │      │                  │       │       │      │                  │       │        │
+                                     │       │      │   VM             │       │       │      │  VM              │       │        │
+                                     │       │      │   Compute Engine │       │       │      │  Compute Engine  │       │        │
+                                     │       │      │                  │       │       │      │                  │       │        │
+                                     │       │      └──────────────────┘       │       │      └──────────────────┘       │        │
+                                     │       │                                 │       │                                 │        │
+                                     │       │         Subnet                  │       │         Subnet                  │        │
+                                     │       │         10.10.0.0/26            │       │         10.50.0.0/26            │        │
+                                     │       │         us-west1                │       │         us-east1                │        │
+                                     │       │                                 │       │                                 │        │
+                                     │       └─────────────────────────────────┘       └─────────────────────────────────┘        │
+                                     │                                                                                            │
+                                     └────────────────────────────────────────────────────────────────────────────────────────────┘
+
+NOTE: On Prem can connect to different regions via VPN Gateway 
 
 
 
+Subnetworks can cross zones within a region
 
 
+┌───────────────────────────────────────Network 1─────────────────────────────────────┐
+│                                                                                     │
+│     ┌─────────────────────────────────Region 1───────────────────────────────┐      │
+│     │                                                                        │      │
+│     │                       ┌──────────────┐       ┌──────────────┐          │      │
+│     │   ┌─────────┐         │    Zone A    │       │    Zone B    │          │      │
+│     │   │subnet-1 │ ───▲────┼───────|──────────────┼───────┼─────────────────┼─     |
+│     │   └────▲────┘    │    │     +───+    │       │    +────+    │          │      │
+│     │        │         │    │     │VM │◄───┼───┐   │    │ VM │◄───┼─────┐    │      │
+│     │        │         │    │     +───+    │   │   │    +────+    │     │    │      │
+│     │        │         │    └──────────────┘   │   └──────────────┘     │    │      │
+│     │        │         │                       │                        │    │      │
+│     └────────┼─────────┼───────────────────────┼────────────────────────┼────┘      │
+│              │         │                       │                        │           │
+│              │         │                       │                        │           │
+└──────────────┼─────────┼───────────────────────┼────────────────────────┼───────────┘
+               │         │                       │                        │
+               │         │                       │                        │
+         10.0.0.0      10.0.0.1             10.0.0.2                 10.0.0.3
+         Reserved     Reserved
+        for Network   for Gateway
+
+NOTE: VMs can be on same subnet but in differt Zones
+ - single firewall rule can apply to both vms
+ - .0 reserved for Network and .1 reserved for Gateway
+ - reserved: second to last and last address (Broadcast Address)
+ - EVERY subnet has 4 reserved IP Addresses in range
 
 
+# Can expand subnets without re-creating 
+ - increase network range of CIDR
+    - can't overlab other subnets
+    - IP range must be unique valid CIDR block
+    - New subnet IP ranges have to fall within valid (Regional) IP ranges
+    - can expand but NOT SHRINK
+    - Auto Mode can expand from /20 to /16
+    - Avoid large subnets
 
+
+NOTE: To increase subnet size, make mask a LOWER NUMBER, 
+  this increases the number of addresses in subnet
+
+i.e.  change 10.0.0.0/29 to  10.0.0.0/26
+
+## IP Addresses
 
 .
