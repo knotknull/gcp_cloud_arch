@@ -1429,4 +1429,94 @@ i.e.  change 10.0.0.0/29 to  10.0.0.0/26
 
 ## IP Addresses
 
+- VM can have two IP addresses (internal external)
+  Internal IP                               External IP
+  -----------------------------------------------------------
+- allocated from subnet range       - Assigned from pool
+  to VMs by DHCP                      (ephemeral)
+- DHCP lease renewed every 24 hrs   - Reserved (static) 
+- VM name + IP is registered        - Bring Your Own IP address (BYOIP)
+  with network-scoped DNS           - VM doesn't know external IP; it is mapped
+                                      to the internal IP
+
+
+** Limit of instances (IP Accr) per network 15K
+
+NOTE: External IP Address is unknown to VM.
+
+
+ - FQDN ==  [hostname].[zone].c.[project-id].internal
+ - DHCP always points FQDN to internal IP
+ - Name resolution handled by internal DNS resolver
+      - each instance has meta data server which acts as DNS resolver
+      - handles all DNS queries for local network resources
+      - routes other resources to Google Pulic DNS Servicers
+      - instances stores lookup table which matches External IP to Internal IP
+
+ - DNS zones can be hosted using Cloud DNS
+      - Google's DNS Services
+      - Low Latency
+      - high Availability
+      - UI, command line, API
+
+ - Alias IP Address
+      - assign range of IP addresses as aliases to VM
+
+
+                │
+      VM        │
+  Primary IP    │
+    10.1.0.2    │
+                │
+┌───────────────v──────────────────┐
+│               +------------+     │             ┌───────────────────────────────────────────┐
+│              VM            |     │             │  Subnet:                                  │
+│  ┌────────────────┐        +---->├─────────────┤  Primary   CIDR range 10.1.0.0/16         │
+│  │   Containers   │              │             │                                           │
+│  │  ┌─────────────┼──┐-----------├─────────────┤  Secondary CIDR range 10.2.0.0/20         │
+│  └──┼─────────────┘  │           │             └───────────────────────────────────────────┘
+│     │   ┌────────────┼───┐       │
+│     └───┼────────────┘   │       │
+│         │                │       │
+│         └────────────────┘       │
+│  VM alias IP Range: 10.2.1.0/24  │
+│                                  │             
+└──────────────────────────────────┘
+
+
+# IP Address / Default Domains
+
+- Google publishes the complete list of IP ranges that it announces to the internet in goog.json.
+- Google also publishes a list of Google Cloud customer-usable global and regional external IP
+    addresses ranges in cloud.json.
+
+https://www.gstatic.com/ipranges/cloud.json:  provides a JSON representation of Cloud
+    IP addresses organized by region.
+
+https://www.gstatic.com/ipranges/cloud_geofeed: standard geofeed formatted IP
+     geolocation file that we share with 3rd-party IP geo providers like Maxmind, Neustar,
+     and IP2Location.
+
+https://www.gstatic.com/ipranges/goog.json and https://www.gstatic.com/ipranges/goog.txt are TXT and JSON formatted files
+    respectively that include Google public prefixes in CIDR notation.
+NOTE: For more information as well as an example of how to use this information, refer to
+
+https://cloud.google.com/vpc/docs/configure-private-google-access#ip-addr-defaults
+
+
+
+## Routes and Firewall Rules
+
+
+
+
+
+
+
+
+
+
+
+
+
 .
