@@ -1507,12 +1507,85 @@ https://cloud.google.com/vpc/docs/configure-private-google-access#ip-addr-defaul
 
 ## Routes and Firewall Rules
 
+# Routes
+- Every network has routes that let instances in a network send traffic to each other
+- default route that directs packets to destinations outside the network  (gateway ??)
+    - firewall rules must allow the packet
+
+- routes map traffic to destination networks
+- routes created when: 
+    - network created
+    - subnet  created
+    - allows VMS on same netowrk to communicate
+
+- Applies to traffic egressing  a VM
+- Forward traffic to most specific route
+- Destination is in CIDR Notation
+
+NOTE: Traffic is delivered ONLY if it also matches a firewall rule
+
+[VM Routing Table]
+192.168.5.0/24
+10.146.0.0/20
+10.128.1.0/20
+0.0.0.0/0
+
+
+# Firewalls
+
+- Firewall rules protect VM instances from unapproved connections
+- VPC network functions as a distributed firewall
+- Connections are allowed / denied at instance level
+- ** Firewall rules are stateful
+- Impled deny all ingress / allow all egress
+
+
+Routes map traffice to destination networks
+Parameter           Details
+----------          -----------
+direction           Inbound  connections are matched against ingress rules only
+                    Outbound connections are matched against egress  rules only
+
+source or           For the ingress direction, sources can be specified as part of the rule with IP addresses, 
+destination         source tags or source service account
+
+protocol and        Any rule can be restricted to apply to specific protocols only or specific cominations 
+port                of protocols and ports only
+
+action              To allow or deny packets that match the direction, protocol, port and source or destination of the rule 
+
+priority            Governs the order in which rules are evaluated; the first matching rule is applied
+
+Rule                All rules are assigned to all instances, but you can assign certain rules to certain instances only
+Assignment
 
 
 
+## Pricing
+# Network Pricing
+Traffic Type                                                Price
+-------------                                               ------
+Ingress                                                     No Charge  (unless a service is processing like Load Balancer)
+Egress to the same zone (Internal IP Addr)                  No Charge  
+Egress to Google products (YouTube, Maps, Drive)            No Charge  
+Egress to a different GCP service                           No Charge  
+   (within same region; exception)
+Egress between zones in the same region (per GB)            $0.01
+Egress to the same zone (via external IP Addr, per GB)      $0.01
+Egress between regions within the US and Canada (per GB)    $0.01
+Egress between regions, not including between US Regions    Varies by Region
+
+# External IP address pricing (us-central1) 
+
+Traffic Type                                                Price / Hour (USD)
+-------------                                               -------------------
+Static IP address (assigned but not used)                     $0.010
+Static and ephemeral IP address in us on std VMs              $0.004
+Static and ephemeral IP address in us on premptible VMs       $0.002
+Static and ephemeral IP address attached to forwarding rules  No charge
 
 
-
+GCP Pricing Calculator:  proviced estimated costs of service + traffic
 
 
 
