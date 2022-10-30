@@ -1666,4 +1666,36 @@ gcloud compute instances create managementnet-us-vm --project=qwiklabs-gcp-03-cc
 
 
 
+
+
+NOTE: In order to connect to your private instance using SSH, you need to open an appropriate port on the firewall. 
+IAP connections come from a specific set of IP addresses (35.235.240.0/20). 
+Therefore, you can limit the rule to this CIDR range.
+
+IAP = Identity-Aware Proxy: TCP forwarding
+   - allows encrypted tunnel to forward SSH, RDP, etc. to VM instances
+
+IAP Range: 35.235.240.0/20
+
+
+NOTE: VM instances that have no external IP addresses can use Private Google Access to reach external IP addresses of Google APIs and services.
+
+
+NOTE: Private Google Access is enabled at the subnet level. When it is enabled, instances in the subnet that only have private IP addresses 
+  can send traffic to Google APIs and services through the default route (0.0.0.0/0) with a next hop to the default internet gateway.
+
+
+# Cloud NAT is a regional resource. 
+  - You can configure it to allow traffic from all ranges of all subnets in a region
+  - from specific subnets in the region only
+  - or from specific primary and secondary CIDR ranges only.
+  - implements outbound NAT, but not inbound NAT.  
+      - hosts outside of your VPC network can only respond to connections initiated by your instances
+
+
+
+
+
+
+
 .
