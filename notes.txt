@@ -1540,7 +1540,7 @@ NOTE: Traffic is delivered ONLY if it also matches a firewall rule
 - Impled deny all ingress / allow all egress
 
 
-Routes map traffice to destination networks
+Routes map traffic to destination networks
 Parameter           Details
 ----------          -----------
 direction           Inbound  connections are matched against ingress rules only
@@ -1629,11 +1629,40 @@ gcloud compute instances create managementnet-us-vm --project=qwiklabs-gcp-03-cc
 
 
 
+## Common network designs
+ - increase availability w/ multiple zones
+    - 1 network -> 1 region -> 2 zones 
+
+ - globalization: multiple regions
+    - 1 network -> 2 region ->s 1 zone 
+
+ - Cloud NAT provides internet access to private instaces
 
 
+┌────────────────────────────────────────────────────────────────┐
+│                                                                │
+│     ┌─────────────────────────┐                                │
+│     │      App Instances      │          ┌───────────┐         │
+│     │    10.20.0.0/16         │          │           │         │
+│     │                         │          │           │         │
+│     └──────────────┬──────────┘          │           ├─────────┼────────────>  Update Server
+│                    │                     │   Cloud   │         │                       
+│                    │                     │   Nat     │         │
+│                   ┌┴─────────────────────►           │         │
+│                   │                      │           ├X────────┼───────────── Unauthorized
+│     ┌─────────────┴───────────┐          │           │         │
+│     │                         │          └───────────┘         │
+│     │      App Instances      │                                │
+│     │      10.21.0.0/16       │                                │
+│     └─────────────────────────┘                                │
+│                                                                │
+└────────────────────────────────────────────────────────────────┘        public
+                        private
 
 
-
+- Private Google Access 
+  - Access public ip address for Google APIs and Services for priv-only VMs 
+  - enable on a subnet basis
 
 
 
