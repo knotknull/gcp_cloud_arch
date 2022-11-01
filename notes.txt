@@ -1698,6 +1698,58 @@ NOTE: Private Google Access is enabled at the subnet level. When it is enabled, 
 ############################################
 ## Virtual Machines
 
+## Compute Engine
+  - any language
+  - IaaS
+  - Server autoscaling
+  - general workloads
+
+Predefined / custom machine types:
+  - vCPUs (cores) and Memory (RAM)
+  - Storage:
+    - zonal or regional persistent disk (HDD / SSD)
+    - local SSD
+    - Cloud Storage
+  - Networking
+  - Linux / Windows
+
+# Compute and Network throughput 
+NOTE:  Network throughput scales 2Gbps per vCPU 
+    - exception 2 or 4 vCPU can get upto 10 Gbps
+    - max 32 Gbps w/ 16 vCPU or 
+      100 Gbps w/ T4 or V100 GPUs 
+      vCPU == 1 hardware hyperthread
+
+# Storage
+ - Standard, SSD, Local SSD
+
+NOTE: Resize disks or migrate instances w/ no downtime
+ - local SSD usually used for swap 
+ - 8 x 375 GB local partitions  3 TB local SSD for each instance
+
+Standard and non-local SSD = 257 TB per instance
+performance scales w/ each GB allocated
+
+
+# Networking
+ - Default, custom
+ - inbound / outbound firewall rules
+    - IP based
+    - Instance / group tags
+ - Regional HTTPS load balancing
+ - Network load balancing
+    - No pre-warming
+ - Global and multi-regional subnetworks
+
+
+
+
+## VM Access
+
+
+
+
+
 
 
 .
