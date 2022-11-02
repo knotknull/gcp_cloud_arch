@@ -1746,6 +1746,106 @@ performance scales w/ each GB allocated
 
 ## VM Access
 
+- creator of VM has full root access to instances 
+
+Linux: SSH                
+- ssh from cloud console or cloudshell via Cloud SDK 
+- ssh from computer or 3rd party client and generate key pair
+- requires firewall rule allow tcp:22
+
+
+Windows: RDP
+- RDP clients
+- Powershell terminal
+- requires setting the windows password
+- requires firewall rule allow tcp:3389
+
+
+# VM Lifecycle
+      +----------------------------------------  Restart  <-----------------------------------------------------------------------+
+      |                        +---------------- Reset <----+                                                                     |
+      v                        v                            |                                                                     |
+[Provisioning] --------->   [Staging]      --------->  [Running]       ----------------------->  [ Stopping]                      | 
+      |                          |                           |                                        |                           |
+      v                          v                           v                                        v                           |             
+   vCPUS                    IP Addresses                Startup                                    Shutdown                       |
+   Memory                (internal / external)          Script   --------> set/get                  Script                        |
+      |                          |                          |              metadata                   |                           |
+      v                          v                          v                                         v                           |
+ rood disk /                   System                     Access      +-->   export               [Terminated]                    |
+ persisten disk                Image                    SSH / RDP     |    system image                |                          |
+      |                          |                          |         |                        +------------------+               |
+      v                          v                          v         |--> snaphost disk       |                  |               |
+  additional disks              Boot                +--  Modify Use <-+                     [Delete]     [Availability Policy] ---+
+                                                    +-> live migrate -+--> Move VM to 
+                                                                          different zone
+
+
+NOTE: Reset wipes memory of VM and resets it to initial state 
+
+#  Changing VM state from running
+
+                        Methods                       Shutdown Script Time          State
+reset         console, gcloud, API, OS                  no                      remains running
+restart       console, gcloud, API                      no                      terminated -> running
+reboot        OS: sudo reboot                           ~90 sec                 running -> running
+stop          console, gcloud, API                      ~90 sec                 running -> terminated
+shutdown      OS: sudo shutdown                         ~90 sec                 running -> terminated
+delete        console, gcloud, API                      ~90 sec                 running -> N/A
+preemption    automatic                                 ~90 sec                 N/A
+
+
+
+
+NOTE: Shutdown script will tak ~90 seconds
+
+
+# Availability policy: Automatic Changes 
+ - "scheduling options" in SKD / API
+
+ Automatic restart: 
+   - Automatic VM restart due to crash / maintenance event
+      - Not preemption or user-initiated terminate 
+ 
+ On host maintenance: 
+   - Determines whether host is live-mgrated or terminated due to maintenance event
+      - Live migration is the default
+ 
+ Live migration: 
+   - During maintenance event, VM is migrated to different hardware without interruption
+   - Metadata indicates occurence of live migration
+
+
+
+# OS Patch management:
+  - Patch compliance reporting 
+  - Patch deployment
+
+
+# Patch management tasks:
+  - Create patch approvals
+  - Setup flexible scheduling
+  - Apply advanced patch config settings
+  - Manage patch jobs / updates from central location
+
+# Stopped / Terminated VMs:
+  Charges stopped for:
+    - memory
+    - cpu resources
+  Charges CONTINUE for:
+    - attached disks
+    - reserved IP addresses
+
+# Actions supported on terminated VM:
+ - change machine type
+ - migrate instance to another network
+ - add / remove attached disks; change auto-delete settings
+ - modify instance tags
+ - modify custom VM or project-wide metadata
+ - remove or set a new static IP
+ - modify VM availability policy
+ - CAN'T CHANGE IMAGE OF STOPPED VM
+
 
 
 
