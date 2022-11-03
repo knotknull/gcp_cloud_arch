@@ -1849,6 +1849,122 @@ NOTE: Shutdown script will tak ~90 seconds
 
 
 
+## Compute Options
+
+
+# Create a VM 
+ - console.google.com
+ - Cloudshell CLI   
+      ex. gcloud compute instances creaate [instance_name]
+ - REST API
+
+Options: 
+  - Project           - Machine type
+  - Region            - Disk Options
+  - Zone              - Image
+  - Subnetwork        - IP Options
+
+
+## Machine types
+  - Machine family
+      - Machine series
+          - Machine type
+
+# Machine Families
+ - General purpose
+ - Compute-optimized
+ - Memory-optimized
+ - Accelerator-optimized
+
+
+ # General purpose
+ 
+Series        Workload                Application
+------        -----------             ----------------
+E2            Day-to-Day              web serving     microservices
+              Lower cost optimized    app serving     virt desktops
+NOTE: Shared core
+
+N2, N2D, N1   Balanced                web serving       med - large db
+              price/performance       app serving       cache
+              wide range of VM
+
+
+NOTE: upto 128 vCPU w/ 0.5 GB to 8 GP per CPU
+N2D == AMD Epyc CPUs
+
+
+Tau T2D       Scale out optimized     scale out workloads       med - large db
+              Best performance        container microservices   Large Java Apps
+
+NOTE: T2D == Epyc TM CPUs
+Predefined VM shapes   60 vCPUS / 4 GB per CPU 
+
+
+ # Compute Optimized
+ 
+Series        Workload                  Application
+------        -----------             ----------------
+C2            Ultra high performance    compute bound workload    microservices
+              compute-intensive         gaming                    ad servering / AI / ML
+NOTE:  4 - 60 CPUs, 240 GP RAM
+
+
+C2D           Largest VMs               memory bound workload     high perofrmance DB
+              Ultra hight perf          gaming                    high performance compute 
+              compute-intensive 
+
+NOTE: 2 - 112 vCPUs    4 GP per CPU
+C2D == AMD Epyc Milan
+
+
+
+
+ # Memory Optimized
+ 
+Series        Workload                  Application
+------        -----------             ----------------
+M1            Ultra high memory    medium in-memory / SAP HANA    in-memory analytics
+                                   high memory to vCPU            Microsoft SQL Server 
+NOTE:  4 TB Memory
+
+M2            Ultra high memory    large in-memory / SAP HANA    in-memory analytics
+                                                                 genomics, SQL Analysis Server 
+NOTE:  12 TB Memory
+
+
+
+ # Accelerator Optimized
+ 
+Series        Workload                  Application
+------        -----------             ----------------
+A2            Optimized high perf     CUDA-enabled ML training       High Performance Compute
+              compute                 Massive parallelized computation
+
+NOTE:  12 - 96 vCPUs  1360 GB RAM
+        fixed number of NVidia GPUs (upto 16)
+
+** cloud.google.com/compute/docs/machine-types
+
+
+ # Custom Machine Type  
+   - either 1 vCPU or even number vCPU
+   - 0.96 GP per vCPU to 6.5 GB per vCPU (default)
+   - Total memory must be multiple of 256 MB
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
