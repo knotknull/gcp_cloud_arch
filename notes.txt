@@ -1848,9 +1848,7 @@ NOTE: Shutdown script will tak ~90 seconds
 
 
 
-
 ## Compute Options
-
 
 # Create a VM 
  - console.google.com
@@ -1952,6 +1950,150 @@ NOTE:  12 - 96 vCPUs  1360 GB RAM
    - 0.96 GP per vCPU to 6.5 GB per vCPU (default)
    - Total memory must be multiple of 256 MB
 
+
+
+## Pricing
+
+- Per-second billing, with minimum of 1 minute
+  - vCPU, GPU, GB RAM
+
+- Resource based pricing:
+  - each vCPU and each GB of memory billed separately
+
+- Discounts
+  - Sustained use: sustained use discounts for machine types in a region collectively  (whatever that means)
+  - Committed use  (usage term of 1 year or 3 years) 57% for custom / most machine types,  70% for memory optimized
+  - Premptible / Spot VM instances
+    - premptible can only run for 24 hours at a time
+    - spot instances do not have a maximum
+
+- Recommendaiton Engine
+  - Notifies you of underutilized instances
+
+- Free usage limits
+
+
+# Sustained use discounts 
+
+Sustained use discounts of up to 30%                    Sustained use discounts of up to 30%    
+--------------------------------------                  --------------------------------------
+General purpose N1 predefined / customa                 General-purpose N2 and N2D predefined and custom 
+machine types, memory-optimized, shared-code,           machine types, cpmpute optimized
+sole-tenant nodes.
+
+Usage level (% month)   % incremental is charged        Usage level (% month)   % incremental is charged        
+  0 - 25%                  100% base rate                0 - 25%                  100%   base rate                
+ 25 - 50%                   80% base rate                25 - 50%                 86.78% base rate                
+ 50 - 75%                   60% base rate                50 - 75%                 73.3%  base rate                
+75 - 100%                   40% base rate                75 - 100%                  60%  base rate                 
+
+Up to 30% net discount for instances that run the entire month
+
+** cloud.google.com/products/calculator
+
+
+
+## Special Compute Configurations
+
+# Preemptible
+  - lower price for interruptible services (60 to 91 %)
+  - VM might be termianted at any time
+      - No charge if terminated in first minute
+      - 24 hours max
+      - 30 second terminate warning, but NOT guaranteed
+          - Time for a shutdown script
+
+  - No live migrate; no auto restart
+      - monitoring / load balancer can start new instance in case of failure
+
+  - Can request that CPU quoata for a region be split between regular and preemption
+      - default: premptible VMs count against region CPU quota
+
+
+# Spot VMS 
+  - Latest version of preemptible VMs
+  - Spot / premptible VMs share same pricing model
+  - No min / max runtime
+  - Spot VMs are finite Compute Engine resources, might not always be available
+  - No live migrate, no auto restart
+
+# Sole tenant nodes
+  - Physically isolate workloads
+  - No other customer VMs on host
+  - Bring own license
+
+┌─────────────────────────────────────────────────┐      ┌─────────────────────────────────────────────────┐
+│                   Normal Host                   │      │                Sole Tenant Host                 │
+│                                                 │      │                                                 │
+│    ┌────────┐     ┌────────┐    ┌────────┐      │      │    ┌────────┐     ┌────────┐    ┌────────┐      │
+│    │  VM1   │     │  VM2   │    │  VM4   │      │      │    │  VM1   │     │  VM2   │    │  VM4   │      │
+│    │        │     │(cust 2)│    │        │      │      │    │        │     │(cust 1)│    │        │      │
+│    │(cust 1)│     └────────┘    │(cust 2)│      │      │    │(cust 1)│     └────────┘    │(cust 1)│      │
+│    │        │                   │        │      │      │    │        │                   │        │      │
+│    │        │     ┌────────┐    │        │      │      │    │        │     ┌────────┐    │        │      │
+│    │        │     │  VM3   │    │        │      │      │    │        │     │  VM3   │    │        │      │
+│    │        │     │        │    │        │      │      │    │        │     │        │    │        │      │
+│    │        │     │(cust 3)│    │        │      │      │    │        │     │(cust 1)│    │        │      │
+│    │        │     │        │    │        │      │      │    │        │     │        │    │        │      │
+│    └────────┘     └────────┘    └────────┘      │      │    └────────┘     └────────┘    └────────┘      │
+│                                                 │      │                                                 │
+│    ┌─────────────────────────────────────┐      │      │    ┌─────────────────────────────────────┐      │
+│    │             Hypervisor              │      │      │    │            Hypervisor               │      │
+│    │                                     │      │      │    │                                     │      │
+│    ├─────────────────────────────────────┤      │      │    ├─────────────────────────────────────┤      │
+│    │            Host Hardware            │      │      │    │           Host Hardware             │      │
+│    │                                     │      │      │    │                                     │      │
+│    └─────────────────────────────────────┘      │      │    └─────────────────────────────────────┘      │
+└─────────────────────────────────────────────────┘      └─────────────────────────────────────────────────┘
+
+
+# Shielded VMs 
+ - Offer verifiable integrity
+      - no boot, kernel level malware / rootkits
+ - Secure Boot
+ - Virtual trusted platform module (vTPM)
+ - Integrity monitoring
+ - NOTE: Requires Shielded Image
+
+
+# Confidential VMs
+ - Select Confidential
+ - Encrypt data in use
+ - Encrypt data while being processed (in Memory)
+ - Easy to use w/ no changes to code or performance compromise
+ - N2D Compute Engine VM running on 2nd gen AMD Epyc processors (Rome)
+    - AMD Secure Encryption Virtualization (SEV)  
+ - Provides high memory capacity, high throughput, supports parallel / compute heavy workloads
+
+
+## Images 
+ - Boot loader
+ - Operating System
+ - File system structure
+ - Software
+ - Customizations
+
+
+# Images 
+- Public base images
+    - Google, third-party vendors and community; Premium images (p)* - per second after 1 min minimum  
+    - Linux
+        - CentOS, CoreOS, Debian, RHEL(p), SUSE(p), Ubuntu, openSUSE, FreeBSD
+    - Wiidows
+        - Windows Server 2019(p), 2016(p), 2012-r2(p)
+        - SQL Server pre-installed on Windows(p) * - per second after 10 min minimum  
+
+- Custom images
+    - Create new image from VM: pre-configured and installed SW
+    - Import from on-pre, workstation, or another cloud
+    - Management features: image sharing, image family, deprecation
+
+NOTE: Premium images vary by machine type.  
+      Prices are global
+
+# Machine Image
+  - Compute Engine Resource
+  - Stores all config, meta data, perms, from 1 or more disks to create a VM instances
 
 
 
