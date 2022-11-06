@@ -1772,7 +1772,7 @@ Windows: RDP
    Memory                (internal / external)          Script   --------> set/get                  Script                        |
       |                          |                          |              metadata                   |                           |
       v                          v                          v                                         v                           |
- rood disk /                   System                     Access      +-->   export               [Terminated]                    |
+ root disk /                   System                     Access      +-->   export               [Terminated]                    |
  persisten disk                Image                    SSH / RDP     |    system image                |                          |
       |                          |                          |         |                        +------------------+               |
       v                          v                          v         |--> snaphost disk       |                  |               |
@@ -1797,11 +1797,11 @@ preemption    automatic                                 ~90 sec                 
 
 
 
-NOTE: Shutdown script will tak ~90 seconds
+NOTE: Shutdown script will take ~90 seconds
 
 
 # Availability policy: Automatic Changes 
- - "scheduling options" in SKD / API
+ - "scheduling options" in SDK / API
 
  Automatic restart: 
    - Automatic VM restart due to crash / maintenance event
@@ -1947,7 +1947,7 @@ NOTE:  12 - 96 vCPUs  1360 GB RAM
 
  # Custom Machine Type  
    - either 1 vCPU or even number vCPU
-   - 0.96 GP per vCPU to 6.5 GB per vCPU (default)
+   - 0.96 GB per vCPU to 6.5 GB per vCPU (default)
    - Total memory must be multiple of 256 MB
 
 
@@ -2095,6 +2095,150 @@ NOTE: Premium images vary by machine type.
   - Compute Engine Resource
   - Stores all config, meta data, perms, from 1 or more disks to create a VM instances
 
+
+## Disk Options 
+# Boot Disk
+   - VM comes w/ single root persistent disk
+   - Image is loaded onto rook disk during first boot:
+      - Bootable you can attach a VM and boot from it
+      - Durable: can surviv VM terminate
+   - Some OS images are customized for Compute Engine
+   - Can suviv VM deletion if "Delete book disk when instance is deleted" is disabled
+
+# Persistent Disk
+ - Network storage appearing as block device
+    - Attached to VM thru network interface
+    - Durable storage : can survive terminate
+    - Bootable storage: can attatch to a VM and boot from it
+    - Snapshots: incremental backups
+    - Performance: Scales w/ size
+    - HDD (magnetic) or SSD (faster solid state)
+    - Disk resizing: even running and attached
+    - Can be attached in read-only mode to multiple VMs
+    - Zonal or Regional
+        - pd-standard
+        - pd-ssd
+        - pd-balanced
+        - pd-extreme (zonal only / high performance DB) 
+          NOTE: Regional  active - active across disk replication two zones in same Region. High performance DB or High Availability
+    - Encryption keys:
+        - Google managed
+        - Customer managed
+        - Customer supplied
+
+
+# Local SSD
+ - different than persistent disk
+ - physically attached to VM
+ - More IOPS, lower latency, higher through put
+ - 375 GB disk, up to 8 == total 3 TB
+ - Data survives a reset but not a VM stop / terminate
+ - VM specific: cannot be reattached to a differnt VM
+
+# RAM disk
+ - tmpfs
+ - faster than local disk, slower than memory
+    - Use when your application expects a file system structrure and cannot directly store data in memory 
+    - fast scratch disk, fast cache
+    - volatile, erase on stop / restart
+    - need large RAM amount
+    - backup to persistent disk
+
+                      Persistent HDD      Persistent SSD        Local SSD       RAM Disk
+Data redundancy           Yes                 Yes                 No                No 
+Encryption at Rest        Yes                 Yes                 Yes               N/A
+Snapshotting              Yes                 Yes                 No                No
+Bootable                  Yes                 Yes                 No                Not
+Use case              General, bulk file     Random IOPS          High IOPS         Low latency
+                                                                  low latency       risk of loss
+
+# Maximum Pesistent Disks (attatch to a VM)
+  Machine Type                Disk Number Limit
+  -------------               -------------------
+  Shared-Core                          16
+  Standard                            128
+  High-memory                         128
+  High-CPU                            128
+  Memory-optimized                    128
+  Compute-optimized                   128
+
+NOTE: Disk thruput will compete with Network ingress / egress
+
+
+# Persistent disk management differences 
+  Cloud Persisten Disk                  Computer Hardware Disk
+  ---------------------                 -----------------------
+ - Single file system is best             - Partitioning
+ - Resize (grow) disks                    - Repartition disk
+ - Resize file system                     - Reformat
+ - Built-in snapshot services             - Redundnat disk arrays
+ - Automatic encryption                   - Subvolume management and snapshots
+                                          - Encrypt files before write to disk
+
+# Common Compute Engine Actions
+
+# Metadata and scripts
+NOTE: Every comptue instance stores data on metadata server
+
+Time    Boot         Run          Maintenance     Shutdown
+        |  ^         |  ^           |  ^            |  ^ 
+        v  |         v  |           v  |            v  | 
+      metadata     metadata       metadata        metadata  
+
+   startup-script-url=URL                         shutdown-script-url=URL   
+
+
+Can get information about instance:
+  i.e. get key value pair for external IP
+
+
+# Move an instance to a new zone
+  Zone 1                              Zone 2 
+  +----------------+            +----------------+
+  |                |            |                | 
+  |   +-------+    |            |   +-------+    | 
+  |   |  VM   | ---|------------|-> |  VM   |    |
+  |   +-------+    |            |   +-------+    |
+  |                |            |                | 
+  +----------------+            +----------------+
+
+  gcloud compute instances move
+
+- Autmoated process (moving within region)
+    - gcloud compute instances move
+    - Update references to VM; not automatic
+        - target VMs or target pools
+  
+- Manual process (moving between regions)
+    - snapshot all persistent disks on the source VM
+    - create new persistent disks in the destination zone restored from snapshots
+    - create a new VM in the destination zone and attache new persisten disks
+    - Assign static IP to new VM
+    - Update references to VM
+        - target VMs or target pools
+    - Delete the snapshots, original disks and original VM
+
+# Snapshots
+- backup critical data from disk to cloud storage
+- migrate data between zones (see manual VM migration)
+- transfer data to different disk type (HDD -> Snapshot -> SDD)
+
+# Persistent disk Snapshots
+- Not available for local SSD
+
+- Creates an incremental backup to Cloud Storage (also compressed)
+    - not visible in your buckets; managed by snapshot services
+    - consider cron jobs for periodic incremental backup
+
+- Snapshots can be restored to a new persistent disk
+    - New disk can be in another region or zone in the same project
+    - Basis of VM migration: "moving" a VM to a new zone
+        - Snapshot doesn't backup VM metadata, tags, etc.
+
+# Resize Persistent Disk
+  - can grow but not shrink disks
+      - increase disk and also increase IOPs 
+      - can be done on running VM
 
 
 
