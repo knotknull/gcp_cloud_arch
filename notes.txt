@@ -18,11 +18,11 @@ NOTE:  This course has been updated to 8 Video Courses / 26h 26m
 
 #############################################################################
 ## Essential Cloud Infrastructure: Foundation
- - Introduction
- - Interacting with Google Cloud
- - Virtual Networks
- - Virtual Machines 
- - Course Resources
+ ✓ Introduction
+ ✓ Interacting with Google Cloud
+ ✓ Virtual Networks
+ ✓ Virtual Machines 
+ ✓ Course Resources
 
 #############################################################################
 ## Essential Google Cloud Infrastructure: Core Services
@@ -2237,7 +2237,7 @@ Can get information about instance:
 
 # Resize Persistent Disk
   - can grow but not shrink disks
-      - increase disk and also increase IOPs 
+      
       - can be done on running VM
 
 
@@ -2254,4 +2254,81 @@ Can get information about instance:
 
 
 
-.
+
+
+
+
+#############################################################################
+## Essential Google Cloud Infrastructure: Core Services
+#############################################################################
+
+## Introduction
+
+<--------------------------   Google Cloud Products and Services  -------------------------->   
+Iaas                                     PaaS                                            SaaS
+
+CPUs, Memory                 Servers                         Clusters              Serverless
+Disks, Interfaces           VM Instances                Cluster Management        Autoscaling
+
+IT Ops                  Sys Ops              Dev Ops               Low Ops             No Ops
+
+
+
+############################################
+## Identity and Access Management (IAM)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ - Storage and Database Services
+ - Resource Management
+ - Resource Monitoring
+ - Course Resources
+
+
+
+
+
+ .
