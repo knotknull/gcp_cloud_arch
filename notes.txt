@@ -2278,6 +2278,265 @@ IT Ops                  Sys Ops              Dev Ops               Low Ops      
 ## Identity and Access Management (IAM)
 
 
+     Who              can do what                     on what resource
+  - person            - specific privileges           - any google cloud services 
+  - group             - actions 
+  - applicaton 
+
+
+## IAM Objects
+  Organization 
+       +- Folders 
+          +- Projects 
+              +- Resources 
+                  +- Roles 
+                      +- Members 
+
+
+NOTE:  ** Each resource has exactly 1 parent
+      - roles granted at organization are inherited by all resources under organization 
+      - roles granted at folder       are inherited by all resources folder contains 
+      - services under project have same default level of trust
+
+
+## Organization Node
+  - root node for Google Cloud Resources
+
+# Organization Roles 
+  - Organization Admin:  control over all cloud resources 
+  - Project Creator   :  controls project creation
+
+
+Organization Resource:
+  - Associated with G Suite / Google Workspace  or 
+      Cloud Identity account
+
+
+When Workspace or Identity account creates GCP project, organization resource provisioned for them 
+Super Admin role: 
+   - assign Organization Admin role to some users
+   - point of contact for recovery issues
+   - control Lifecycle of Workspace / Cloud Identity account and Organization resource
+
+Organization Admin role: 
+   - Define IAM policies
+   - Determine structure of resource hierarchy
+   - Delegate responsibility over critical components such as:
+      - Networking
+      - Billing
+      - Resource hierarchy via IAM roles
+
+
+## Folders 
+- Organization within an organization
+- Additional grouping mechanism / isolation boundaries between projects
+    - Legal Entities
+    - Departments
+    - Teams
+NOTE: Folders allow delegation of admin rights    
+    - Folders can contail projects and other folders
+
+
+Resource Manager Roles       | Policy 
+    - Organization           |
+        - Admin              | Inheritance
+        - Viewer             |
+    - Folder                 v
+        - Admin              |
+        - Creator            |
+        - Viewer             |
+    - Project                |
+        - Creator (automatic |
+                   owner)    |
+        - Deleter            v
+
+
+## Roles 
+ 3 types:
+   - Basic
+   - Predefined
+   - Custom
+
+# Basic Roles
+  - original roles available in google cloud console
+    - Owner
+        - Invite, remove, delete projects
+    - Editor
+        - Deploy, Modify, Config
+        - Deploy, Modify, Config
+    - Viewer
+        - Read Only
+    - Billing Amdin
+        - billing / add, remove admins
+
+NOTE: Each projects can have multiple Owner, Editor, Viewers, Billing Admins
+
+GCP Services have:
+   - own set of pre-defined roles 
+   - where roles can be applied
+
+collection of permissions on a service
+
+# Pre-defined roles more fine-grained:
+                                            compute.instances.delete 
+  - InstanceAdmin Role      ------------->  compute.instances.get
+                                            compute.instances.list, etc. 
+
+NOTE: permissions are classes and methods in API
+
+ex. Compute Admin Roles
+Role                  Description
+-----------          ------------------------------------ 
+Compute Admin         Full control of compute.*
+Network Admin         Create, modify, delete networking resources  (except firewall rules / SSL certs)
+Storage Admin         Create, modify, delete disks, images, snapshots
+
+
+# Custom roles
+  - define precise set of perms
+  - least privilege:   Instance Operator role == compute.instances. (get, list, start, stop)
+
+NOTE: Custom roles are NOT maintained by Google 
+
+ 
+## Members 
+
+** 5 Types of Members
+  - Google Account
+  - Service Account
+  - Google Group
+      - Collection of Google Accounts and Service Accounts
+        - Apply access policy to group of users
+  - Google Workspace Domain
+  - Cloud Identity Domain
+
+NOTE:  ** You CANNOT use IAM to create or manage your users or groups
+
+## IAM Policy 
+Policy == Member Identity + Roles
+  - A policy consists of a list of bindings
+  - A binding binds a list of members to a role
+       - role named a list of permissions 
+
+Policy = collection of access statements attached to resource 
+
+NOTE: Resource policy is a union of parent and resource
+**    - Less restrictive parent policy will override more restrictive resource policy
+      - Child policies cannot restrict access granted at parent level
+       !! hence least privilege
+
+
+## IAM Conditions 
+  - Enforce conditional, attribute-based access control for Google Cloud Resources 
+      - grant resource access to identities only if configured conditions are met
+      - specified in role bindings of a resource's IAM policy
+
+
+## Organization Policy
+  - configuration of restrictions
+  - configure a constraint w/ desired restrictions
+  - applied to Orginization node, folders or projects
+
+
+
+# Google Cloud Directory Sync
+
+                           Google Cloud
+Active Directory or     -- Directory Sync -->  Users and groups in Cloud Identity domain
+LDAP                    (scheduled one way)
+
+# Single Sign-On (SSO)
+  - Use Cloud Identity to configure SAML SSO
+  - If SAML2 isn't supported use 3rd pary (ADFS, Ping, Okta) 
+
+
+## Service Account
+  - provides an identity for carrying out Server-to-Server interactions
+  - belongs to Application and not end user
+  - Compute Engine instances can automatically acquire access tokens with credentials 
+  - Tokens are used to access any service API in your project.
+
+identified by email address :  12321322-compute@project.gserviceaccount.com
+
+3 types of service accounts: 
+  - User-created (custom)
+  - Built-in 
+      - Compute Engine / App Engine default service accounts
+  - Google APIs service account
+      - Runs internal Google processes on your behalf
+
+# Default Compute Engine Service Account 
+  - Automatically created per project with auto-generated name and email address:
+        ex. 29xxxxxx0956-compute@developer.gserviceaccount.com 
+  - Automatically added as a project Editor
+  - By default, enabled on all instances created using gcloud or Cloud console
+
+
+## Scope
+  - Autheticated Identity gets a scope i.e. read_only, read_write
+  - Each service as scopes
+  - Scopes can be changed after an instance is created
+
+  Scopes customized when creating default service account 
+
+Access scopes WERE (before IAM) only way to grant permissions to service accounts for VM
+NOTE: for user-created service accounts, use IAM roles 
+ 
+ 
+Roles for services accounts can be assigned to Groups or Users 
+ 
+Service Account -->> InstanceAdmin Role -->> Compute Instances   
+User/Group -->>  ServiceAccountUserRole -->> Service Account 
+ 
+Cloud IAM can "slice up" a project with different microservices by 
+assigning different Service Accounts to different resources.  
+
+ 
+## 2 Types of Google Service Accounts 
+Google Managed Service Accounts                 User Managed Service Accounts
+- all service accounts have                     - Google only stores the public portion of a 
+  Google-managed keys                             user managed key
+
+- Google stores both the public and            - Users are responsible for private key security 
+  private portion of the key  
+
+- Each public key can be used for signing      - Can create up to 10 user-managed service account
+  for a maximum of two weeks                     keys per service
+ 
+- Private keys are never directly accessible    - Can be administerd via the IAM API, gcloud, console
+ 
+
+NOTE:  Google does not save your user-managed private keys !!
+
+# List all keys associated with a Service Account 
+
+gcloud iam service-accounts keys list --iam-account user@email.com
+
+
+## IAM Best Practices 
+ - Leverage / understand resource hierarchy
+ - Use project to group resources that share same "trust boundary"
+ - Check policy granted on each resources -- Understand Inheritance
+ - Use principle of least privilege when granting roles
+ - Audit policies in Cloud Audit Logs: setiampolicy
+ - Audit membership of groups used in policies
+
+# Grant Roles to Groups not individuals
+   - audit membership
+   - control ownership of Google group used in IAM policies
+
+# Service Account 
+  - carefule when granting serviceAccountUser role
+  - Clearly identify Service Account purpose when naming
+  - Establish a naming convention for Service Accounts
+  - Establish key rotation policies / methods
+  - Audit with serviceAccount.keys.list()
+
+# Identity-Aware Proxy (IAP)
+  - enforce access control policies for apps and resources 
+  - identity-based access controls
+  - central authorization layer for apps accessed by HTTPS
+  - IAM policy applied AFTER authentication
 
 
 
@@ -2312,20 +2571,6 @@ IT Ops                  Sys Ops              Dev Ops               Low Ops      
 
 
 
-
-
-
-
-
-
-
-
-
-
- - Storage and Database Services
- - Resource Management
- - Resource Monitoring
- - Course Resources
 
 
 
