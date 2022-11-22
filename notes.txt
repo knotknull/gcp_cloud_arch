@@ -2540,13 +2540,176 @@ gcloud iam service-accounts keys list --iam-account user@email.com
 
 
 
-
-
-
 #################################
 ## Storage and Database Services
 
 ## Cloud Storage
+  - object storage service
+  - website content
+  - archiving / DR
+  - distributing large data objects to 
+    users via direct download
+
+# Cloud Storage features:
+  - scalable to exabytes
+  - time to first byte in ms
+  - very high availability across all storage classes
+  - single API across storage classes
+
+Collection of buckets you place objects into
+  - directory is just another object that points to other objects
+
+# Cloud Storage classes:
+                              Standard                      Nearline                        Coldline                Archive
+Use Case              Hot data and/or stored              Infrequently accessed data      Infrequently accessed     Data archiving, 
+                      for only brief periods of           i.e. data backup, long-tail     data read / modify at     online backup, DR 
+                      time i.e. data instense compute     multimedia, data archiving      most 1x / quarter         read < 1x / yr
+                                                              read < 1 per 30 days
+Min Storage Duration          None                              30 Days                         90 Days                 365 Days
+
+Retrieval Cost                None                              $0.01 / GB                     $0.02 / GB               $0.05 / GB
+
+Availability SLA          99.95% (multi / dual)               99.9% (multi/dual)               99.9% (multi/dual)       99.9% (multi/dual)
+                            99.9% (region)                    99.0% (region)                   99.0% (region)           99.0% (region)
+Durability                  99.999999999%                     99.999999999%                    99.999999999%            99.999999999% 
+
+NOTE: Each storage class has three location types:
+Multiregion: large geographic area i.e. U.S.  ( 2 or more geographic regions)
+Dual Region: specific pair of regions i.e. (Finland, Netherlands)
+Region     : specific geographic place i.e. (London)
+
+
+Cloud Storage Overview:
+  - Buckets 
+      - Naming requirements
+      - Cannot be nested
+  - Objects 
+      - Inherit storage class of bucket when created
+      - No minimum size; unlimited storage (??)
+  - Access
+      - gsutil 
+      - RESTful JSON API or XML API
+
+Change Default Storage Classes:
+  - Default class is applied to new objects 
+      - Can specifiy storage class for the object
+      - Can change default storage class for bucket
+          - CAN'T CHANGE  LOCATION TYPE:  from multi-region to dual, vice versa, etc.
+  - Multi-regional bucket can never be changed to regional
+  - objects can be moved from bucket to bucket
+  - Object Lifecycle Management: manage classes of objects
+
+
+
+IAM: Roles are inherited from Project to Bucket to Object
+
+  +-------- Project --------+ 
+  |                         |         | IAM
+  |      [ Bucket   ]       |         | ACLs
+  |      [          ]       |  <------| Signed URL               ( Signed and Timed Crypto Key )
+  |      [ {Object} ]       |         | Signed Policy Document   ( Controls File Upload Policy )
+  |      [          ]       |
+  |      [----------]       |
+  |                         |
+  |                         |
+  +-------------------------+ 
+
+# ACL:  Who has access to your buckets and objects 
+      What level of objec
+
+** MAX:  100 ACL per bucket
+ACL has:
+  - Scope     :  Who can perform what actions   (user / group of users)
+                    - allUsers
+                    - allAuthenticatedUsers
+  - Permission:  What actions cab be performed  (Owner, Writer, Reader)
+
+# Signed URL 
+  - "Valet key" access to buckets and objects via ticket
+      - Ticket is a cryptographically signed URL
+      - Time-limited
+      - Operations specified in ticket: HTTP GET< PUT, DELETE (not POST)
+      - Any user with URL can invoke permitted operations
+
+ Example using privaate account key and gsutil: 
+  gsutil signurl -d 10m path/to/privatekey.p12 
+  gs://bucket/object
+ 
+ 
+# Additional Cloud Storage features:
+  - Customer supplied encryption key (CSEK)
+      - Use your own key instead of Google-managed keys
+
+  - Object Lifecycle Management
+      - Automatically delete or archive objects
+
+  - Object Versioning
+  - Directory Synchronization 
+      - Sync a VM directory with a bucket
+  - Object change notification
+  - Data import
+  - Strong consistency
+ 
+# Object Versioning 
+  - Objects are immutable 
+  - When versioning enabled for a bucket:
+          - Creates archive version of object each time 
+            object is overwritten or deleted. 
+          - Maitain history of modifications of objects
+          - list archived versions of an object
+              - restore an object to older state
+              - delete a version
+  - Can turn versioning on or off for a bucket at any time
+ 
+ 
+ 
+# Object Lifecycle Management 
+  - assign lifecycle config to a bucket
+      - downgrade storage class on objects older than a year
+      - delete objects created before specific date
+      - keep only 3 most recent version of an object
+
+NOTE:  Object inspection occurs in asynchronous batches (might not happen right away)
+       Changes can take 24 hours to apply
+
+
+
+
+# Object Change Notification
+
+  - Nofiy App when object is updated or added to bucket
+    notification channel: web hook
+    - notifies when object is add, update or removed from bucket
+Recommended: Pub/Sub Notifications for Cloud Storage
+
+
+# Data Import Services 
+ - Transfer appliance      : Rack, capture and then ship your data to Google Cloud
+ - Storage Transfer Service: Import online data (another bucket, an S3 bucker or web source)
+ - Offline Media  Import   3rd Party provider uploads the data from physical media
+
+
+# Cloud Storage provides strong global consistency 
+  - read-after-write
+  - read-after-metadata-update
+  - read-after-delete
+  - bucket listing
+  - object listing
+
+## Filestore 
+  - managed file storage service for applications
+  - managed network attached storage (NAS) for comput engine / GKE
+  - Predictable performance
+  - Full NFSv3 support
+  - Scales 100s of TBs for high performance workloads
+
+# Filestore Use Cases 
+  - Application migration
+  - Media rendering
+  - Electronic Design Automation (EDA)
+  - Data Analytics
+  - Genome processing
+  - Web content management
 
 
 
@@ -2559,24 +2722,4 @@ gcloud iam service-accounts keys list --iam-account user@email.com
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- .
+ . 
