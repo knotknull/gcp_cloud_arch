@@ -2712,6 +2712,132 @@ Recommended: Pub/Sub Notifications for Cloud Storage
   - Web content management
 
 
+## Cloud SQL 
+- Fully managed database service 
+  - MySQL
+  - PostgreSQL
+  - Microsoft SQL Server
+- Patches updates automatically applied 
+- Administer MySQL users
+- Supports many clients
+  - Cloudshell 
+    - gcloud sql
+  - App Engine, Google Workspace scripts
+- Supports Apps Tools 
+  - SQL Workbench, Toad 
+  - External apps using MySQL drivers
+
+
+Performance:
+  - ** 64 TB Storage
+  - ** 60k IOPS
+  - ** 624 GB RAM
+  - ** 96 Processor cores
+  - ** Scale out w/ read replicas
+
+Choices:
+  - MySQL 5.6, 5.7 (default) or 8.0
+  - PostgreSQL 9.6, 10, 11, 12, 13 (default) or 14
+  - SQL Server 2017 or 2019 (default)
+
+
+# Cloud SQL Services 
+  - HA Configuration 
+      - Primary Instance (Zone A) --> Standby Instance (Zone B) (within Region, )  
+        - synchronous replication to both zones
+
+  - Backup service
+    - Point in time recovery
+
+  - Import / Export 
+    - MySQL dump, csv files
+
+  - Scaling 
+    Up : Machine capacity (requires restart)
+    Out: Read Replicas
+
+Decision Tree:
+
+in-memory store                     -->> Memorystore
+non-relational / document db        -->> Firestore (like mongodb ?)
+non-relational / non-document db    -->> Cloud Bigtable (like Hadoop)
+relational / analytics              -->> BiqQuery   (No Updates)
+relational / ACID / < 99.999% Avail -->> Cloud SQL 
+relational / ACID / > 99.999% Avail -->> Cloud Spanner
+
+
+
+## Cloud Spanner
+ - combines relational db with non-relational horizontal scale 
+   - Scale to petabytes
+   - Strong consistency
+   - High Availability
+   - used for financial / inventory apps
+   - ** Monthly Updatime 
+    - Multi-Regional  99.999% (5 - 9's)
+    - Regional 99.99% (4 - 9's)
+
+# Characteristics **
+                  Cloud Spanner                  Relational DB                  Non-Relational DB
+Schema                Yes                             Yes                             No
+SQL                   Yes                             Yes                             No
+Consistency           Strong                          Strong                          Eventual
+Availability          High                            Failover                        High
+Scalability           Horizontal                      Vertical                        Horizontal
+Replication           Automatic                       Configurable                    Configurable
+
+
+# Cloud Spanner Architecture
+
+┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                                                                                                │
+│                                            Cloud Spanner Instance                                              │
+│                                                                                                                │
+│                                                                                                                │
+│                                                     +------ Update                                             │
+│                                                     |                                                          │
+│                                                     |                                                          │
+│                                                     v                                                          │
+│      ┌──────────────────────────┐       ┌──────────────────────────┐         ┌──────────────────────────┐      │
+│      │                          │       │                          │         │                          │      │
+│      │          Zone 1          │       │        Zone 2            │         │         Zone 3           │      │
+│      │                          │       │                          │         │                          │      │
+│      │   ┌───────────────────┐  │       │   ┌───────────────────┐  │         │   ┌───────────────────┐  │      │
+│      │   │     DB 1          │<-------------│     DB 1          │--------------->│     DB 1          │  │      │
+│      │   └───────────────────┘  │       │   └───────────────────┘  │         │   └───────────────────┘  │      │
+│      │                          │       │                          │         │                          │      │
+│      │   ┌───────────────────┐  │       │   ┌───────────────────┐  │         │   ┌───────────────────┐  │      │
+│      │   │     DB 2          │<-------------│     DB 2          │--------------->│     DB 2          │  │      │
+│      │   └───────────────────┘  │       │   └───────────────────┘  │         │   └───────────────────┘  │      │
+│      │                          │       │                          │         │                          │      │
+│      └──────────────────────────┘       └──────────────────────────┘         └──────────────────────────┘      │
+│                                                                                                                │
+└────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+NOTE: 
+
+ - Cloud spanner instance replicates data in "N" Cloud Zones
+      - Can be in 1 region OR several regions
+
+ - Database placement is configruable
+      - Can choose which region to put database in
+
+ - High Availability / Global Placement
+
+ - Replication is synchonized across zones using Google global fiber network
+ - Atomic clocks used to ensure Atomicity when updating data
+
+
+# Cloud Spanner Decision Tree
+
+Out grown single instance RDBMS   |
+Sharding for DB througput         |
+Need transactional consistency    |-- YES  >> Consider Cloud Spanner 
+Global data + strong consistency  |
+DB consolidation                  |
+
+
+## Firestore
 
 
 
@@ -2722,4 +2848,46 @@ Recommended: Pub/Sub Notifications for Cloud Storage
 
 
 
- . 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+. 
