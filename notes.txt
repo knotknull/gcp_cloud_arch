@@ -2831,7 +2831,7 @@ NOTE:
 # Cloud Spanner Decision Tree
 
 Out grown single instance RDBMS   |
-Sharding for DB througput         |
+Sharding for DB throughput        |
 Need transactional consistency    |-- YES  >> Consider Cloud Spanner 
 Global data + strong consistency  |
 DB consolidation                  |
@@ -2839,44 +2839,117 @@ DB consolidation                  |
 
 ## Firestore
 
+- NoSQL Document Database
+- fully managed / serverless
+- ACID Transactions
+- Multi-region replication
+- Mobile, web, IoT Apps @ global scale
+- live synchronization
+- integration w/ firebase
+- powerful query engine
+
+Firestore next gen of Datastore
+ - Datastore mode: backwards compatible w/ Datastore apps 
+ - queries now strongly consistent
+ - realtime updates
+ - Collection and document data model
+
+
+# Cloud Firestore Decision Tree
+
+Schema might change / need adaptable databse  -- Y -->> Firestore
+Scale down to zero                            -- Y -->> Firestore
+Want low maintenance overhead scaling to TB   -- Y -->> Firestore
+Transactional Consistency                     -- N -->> Bigtable
+Transactional Consistency                     -- Y -->> Cloud SQL / Spanner
+
+
+## Cloug Bigtable
+ - NoSQL big data database service (Think: Hadoop / HBase)
+ - Fully managed / wide column DB
+ - Petabyte scale
+ - Consisten sub 10ms latency
+ - Seamless scalability for throughput
+ - Learns and adjusts to access patterns (huh ??)
+ - Ideal for Ad Tech, Fintech, IoT
+ - Storage engine for ML Apps
+ - Easy integration with open source big data tools:  Hadoop / HBase
+ - High read / write throughput @ low latency
 
 
 
+# Cloud Bigtable storage model 
+ - wide sparse columns 
+ - sorted key / value map
+
+               |---------------------- Follows ---------------------------|
+Row Key           gwashington       jadams      tjefferson        wmmckinley
+gwashington                            1
+jadams                1                             1
+tjefferson            1                1                              1
+wmmckinley                                          1
+
+
+# Cloud Bigtable Architecture
+ - Processing is separated from storage
+
+               ____        ____          ____        ____          ____        ____  
+              /    \      /    \        /    \      /    \        /    \      /    \ 
+Clients      |      |    |      |      |      |    |      |      |      |    |      |
+              \____/      \____/        \____/      \____/        \____/      \____/  
+                  +-----------+            +-----------+             +-----------+ 
+                        |                        |                         |
+               +------------------+      +------------------+      +------------------+
+Processing     |   Big Table      |      |   Big Table      |      |   Big Table      |
+               |      Node        |      |      Node        |      |      Node        |
+               +------------------+      +------------------+      +------------------+
+                        |                        |                         |
+                        |                        |                         |
+                        |                        |                         |
+Storage     +-----------v------------------------v-------------------------v----------------+
+            |                                                                               |
+            |                             Collossus File System                             |
+            |                                                                               |
+            +-------------------------------------------------------------------------------+
+
+NOTE: Bigtable table is shared into blocks of contiguous rows called tablets
+      Tablets similar to HBase regions.
+      Saved in SSTable format (?): persistent ordered immutable map from keys to value
+      Throughput scales linearly, more nodes == faster throughput
+
+
+# Cloud Bigtable Decision Tree
+
+Storring > 1TB                      -- Y -->> Bigtable
+High volumes or writes              -- Y -->> Bigtable
+r/w latency < 10ms                  -- Y -->> Bigtable
+strong consistency                  -- Y -->> Bigtable
+HBase API compatible                -- Y -->> Bigtable
+else                                -- N -->> Firestore
+
+
+- Bigtable scales  UP well
+- Firestore scales DOWN well
+
+** Smallest Bigtable cluster that can be created: 
+ - 3 nodes / 30k Ops / sec 
 
 
 
+## Memorystore 
+ - Fully managed Redis service
+ - In-memory data store service
+ - High availability, failover, patching and monitoring
+      - HA instances replicated across 2 zones 
+      - 99.9% availability sla
+ - sub-millisecond latency
+ - instances 300 GB
+ - Network throughput of 12 Gbps
+ - Easy lift and shift via import / export tools
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#################################
+## Resource Management
 
 
 
