@@ -2949,7 +2949,112 @@ else                                -- N -->> Firestore
 
 
 #################################
-## Resource Management
+## Resource Manager
+
+# Hierarchically manage resources 
+GCP -> Organization -> Folders -> Projects -> Resources -> VM
+
+# Billing and Resource Monitoring
+
+ - Resources belong to one and only one project
+  | 
+  +-> Project is associated with one billing account
+    | 
+    +-> Organization contains all billing accounts
+      | 
+      +-> Billing and Resource Monitoring
+
+
+# Organization node is root node for GCP resources
+
+- Projects acculate consumption of all resources 
+   - Track resource and quota usage
+      - Enable billing
+      - Manage permissions and credentials
+      - Enable services and APIs
+
+   - Projects use three identifying attributes  ***
+      - Project Name
+      - Project Number
+      - Project ID (aka Application ID)
+
+# Resources can be global, regional or zonal
+  global  :  Images, snapshots, networks
+  regional:  External IP Addr
+  zonal   :  Instances, disks
+
+## Quotas
+# All resources subject to project quotas or limits
+ -  how many resources can create per project
+    - 15 VPC networks / project
+
+ -  how quickly you can make API requests in a project / rate limit
+    - 5 admin actions / second (Cloud Spanner)
+
+ -  how many resouces you can create per region
+    - 24 CPUs region / project
+
+Increase via Quotas page in Google Cloud console
+
+# Quota reasons
+  - prevent runaway consumption
+  - prevent billing spikes / surprises
+  - force sizing consideration
+
+
+
+## Labels
+ - Utility for organizing GCP resources
+ - Key / Value pairs attached to resources
+ - Attached to resources: VM, disk, image, etc. 
+  - GCP console, gcloud, api
+
+*** Each resource can have 64 labels
+  - can filter resources 
+  - use in scripts / inventory
+      - run bulk operations
+
+
+Label types:
+  - Team / Cost Ctr:  team: marketing
+  - Component:        component: redis
+  - Environment:      env: prod
+  - Owner:            owner: ops
+  - State:            state: inuse
+                      state: ready_for_deletion
+
+
+Labels vs Tags
+Labels                            Tags
+  organize resources                Applied to instances only
+  user defined key-value            user defined strings
+  propagated thru billing           tags primarily used for networking (firewall rules)
+
+
+## Billing
+  - Budget name
+  - Project for Budget
+  - Budget amount
+  - Actions 
+      - alerts sent via email after % of budget or $ amount
+
+
+Cloud Pub/Sub can receive notification about budget
+    -> Cloud Functions can automate cost management
+
+
+use labels and export billing data to BigQuery
+
+- visualize spend with Data Studio
+
+
+
+
+#################################
+## Resource Monitoring
+
+Google Cloud Operations Suite == Stackdriver
+
 
 
 
