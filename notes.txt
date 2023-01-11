@@ -3115,7 +3115,59 @@ install via :
 - custom metrics can be created.
 
 
+## Logging / Cloud Logging (formerly Stackdriver Logging)
+  - fully managed service
+  - store, search, monitor alert log data and events from gcp and aws 
 
+  - Platform, system, application logs 
+    - API to write to logs
+    - 30 day retention
+
+  - Log search / view / filter
+  - Log based metrics
+  - Logs can be exported to:
+    - Cloud Storage
+    - BigQuery:  Analyze logs w/ BigQuery and Data Studio  
+    - Pub/Sub
+
+
+install logging agent (compute engine / EC2): 
+  curl -sS0 https://dl.google.com/cloudagents/install-logging-agent.sh
+  sudo bash install-logging-agent.sh
+
+## Error Reporting
+
+  - counts, analyzes, aggregates errors in running cloud services
+  - Error dashboard / notifications
+
+  - AppEngine, Compute Engine, Cloud Functions, Cloud Run, GKE, EC2 
+  - Go, Java, .NET, Node.js, PHP, Python, Ruby
+
+## Tracing / Cloud Trace
+  - distributed tracing system 
+  - collects latency data 
+  - displayted in GCP Console
+
+  Can run on :
+  - App Engine
+  - Google HTTP(S) load balancers
+  - Cloud Trace SDKs
+
+## Debugging / Cloud Debugger
+  - inspect state of app in realtime without stopping / slowing significantly
+  - debug snapshots:
+      - call stack / local variables
+  - debug logpoints:
+      - inject logging into services without stopping
+  - Java, Python, Go, Node.js, Ruby, PHP, .Net
+
+
+
+
+
+#############################################################################
+## Elastic Cloud Infrastructure: Scaling and Automation  
+#############################################################################
 
 
 
