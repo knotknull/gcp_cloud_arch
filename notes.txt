@@ -3055,12 +3055,64 @@ use labels and export billing data to BigQuery
 
 Google Cloud Operations Suite == Stackdriver
 
+ - Integrated monitoring, logging, diagnostics 
+ - Google Cloud and AWS
 
+Stackdriver / Google Cloud operations Suite 
+    - monitoring
+    - logging
+    - error reporting
+    - trace
+    - debugger
 
+## Monitoring
 
+ - Used for Site reliability engineering
+ - Dynamic config / intelligent defaults
+ - Platform, system and app metrics 
+    - ingests metrics, events, metadata
+ - uptime / health checks
+ - dashboards
+ - alerts
 
+# metrics scope    ==  "Single Pane of Glass" 
+  - can have 1 to 100 monitored projects
+  - gcp projects and aws accounts can only be monitored with 1 metric scope
 
+# Hosting Project
+  - first monitored gcp project in metric scope
+    - monitoring 
+    - dashboards 
+    - uptime checks 
+    - configs
+  - AWS Connector must be configured in a GCP Project created to hold AWS Connector
 
+** Access to metrics scope has access to all projects metrics 
+  - need separate metrics scopes if you need fine grained access 
+
+# Alerting Policies 
+  - metric / condition / threshold / time >> notify
+
+i.e. outbound traffic / above / 1000000 bytes / 1 min >> sms, email 
+
+- uptime check:  http, https, tcp
+    - app engine app
+    - compute engine instance
+    - url of host
+    - aws instance / load balancer 
+
+Can get some metrics without monitoring agent:
+ - cpu util  
+ - disk traffic metrics
+ - network traffic
+ - uptime 
+
+-  Monitoring agent available for compute engine and EC2
+install via :
+  curl -sS0 https://dl.google.com/cloudagents/add-monitoring-agent-repo.sh
+  sudo bash add-monitoring-agent-repo.sh
+
+- custom metrics can be created.
 
 
 
