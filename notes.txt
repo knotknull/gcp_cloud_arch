@@ -3254,18 +3254,27 @@ install logging agent (compute engine / EC2):
   - Used for establishing BGP sessiong
 
 
+## Cloud Interconnect and Peering
+
+              Dedicated                                 Shared
+             -------------                            -------------
+Layer 3     Direct Peering  <---- [Cloud VPN] ---->  Carrier Peering
+
+Layer 2     Dedicated Interconnect                   Partner Interconnect
+
+Interconnect == Layer 2
+Peering      == Layer 3
+
+ - Dedicated == Direct connection to Google Network
+ - Shared    == Connection to Google Network thru partner
 
 
+Layer 2: uses VLAN into GCP to access internal addresses  RFC 1918
+
+Layer 3: Access to G Suite services, Youtube, Google Cloud APIs using public IP addresses
 
 
-
-
-
-
-
-
-
-
+Cloud VPN between Direct Peering and Carrier Peering
 
 
 
