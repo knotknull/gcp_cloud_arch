@@ -3171,5 +3171,106 @@ install logging agent (compute engine / EC2):
 
 
 
+#################################
+## Interconnecting Networks
 
-. 
+## Cloud VPN 
+ - Securely connects on-prem with Google Cloud VPC network
+    - IPSec VPM Tunnel
+    - Encrypted / Decrypted via VPN Gateway
+    - Low-volume data connections
+    - 99.9% SLA ***
+    - Regional Resouce w/ Regional External IP
+
+ - Supports:
+    - Site-to-Site VPN
+    - Static Routed
+    - Dynamic Routes (Cloud Router)
+    - IKEv1 / IKEv2 ciphers
+
+      ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+      │                                                                               ┌─────────────────┐                                                  │
+      │                                                                               │                 │                                                  │
+      │                                                         ┌─────────────────────┤    Internet     ├────────────────────┐    Max MTU 1460 Bytes ***   │
+      │                                                         │                     │                 │                    │                             │
+      │                                          VPN Tunnel     │                     └─────────────────┘                    │                             │
+      │                                     (Encrypted Traffic) │                                                            │                             │
+      │     ┌───────────────────────────────────────────────────┼───────────────────────┐                  ┌─────────────────┼───────────────────────┐     │
+      │     │ Project                                           │                       │                  │                 │ On Prem External IP   │     │
+      │     │                                                   │                       │                  │       ┌─────────┴──────────┐            │     │
+      │     │  ┌────────────────────────────────────────────────┼───────────────────┐   │                  │       │                    │            │     │
+      │     │  │                                                │                   │   │                  │       │    On Premise      │            │     │
+      │     │  │ VPC Network                       ┌────────────┼───────────────┐   │   │                  │       │      Gateway       │            │     │
+      │     │  │   ┌───────────┐  ┌────────────┐   │            │  GCP Regional │   │   │                  │       │                    │            │     │
+      │     │  │   │  VPC      │  │            │   │            │  External IP  │   │   │                  │       │                    │            │     │
+      │     │  │   │  Routing  ├──┤   Routing  │   │   ┌────────┴──────────┐    │   │   │                  │       └─────────┬──────────┘            │     │
+      │     │  │   │           │  │            ├───┼───┤    Cloud VPN      │    │   │   │                  │                 │                       │     │
+      │     │  │   └────┬───┬──┘  │    Table   │   │   │      Gateway      │    │   │   │                  │                 │                       │     │
+      │     │  │        │   │     │            │   │   └───────────────────┘    │   │   │                  │                 │                       │     │
+      │     │  │        │   │     └────────────┘   │                            │   │   │                  │                 │                       │     │
+      │     │  │        │   │                      │                            │   │   │                  │                 │                       │     │
+      │     │  │        │   │                      │                            │   │   │                  │   ┌─────────────┴───────────────────┐   │     │
+      │     │  │  ┌─────┼───┼──────────────┐       │                            │   │   │                  │   │                                 │   │     │
+      │     │  │  │     │   │              │       │  ┌──────────────────────┐  │   │   │                  │   │       On Premise Subnets &      │   │     │
+      │     │  │  │     │   │              │       │  │                      │  │   │   │                  │   │            Resources            │   │     │
+      │     │  │  │     │   └──────────────┼───────┼──│ 192.168.1.0 / 24     │  │   │   │                  │   │                                 │   │     │
+      │     │  │  │     │                  │       │  │                      │  │   │   │                  │   │      ┌───────────────────┐      │   │     │
+      │     │  │  │  ┌──┴─────────────┐    │       │  │                      │  │   │   │                  │   │      │   10.0.1.0 / 24   │      │   │     │
+      │     │  │  │  │ 10.21.0.0 / 16 │    │       │  │                      │  │   │   │                  │   │      └───────────────────┘      │   │     │
+      │     │  │  │  │                │    │       │  │     Google Cloud     │  │   │   │                  │   │                                 │   │     │
+      │     │  │  │  │  Google Cloud  │    │       │  │       Resources      │  │   │   │                  │   │      ┌───────────────────┐      │   │     │
+      │     │  │  │  │    Resources   │    │       │  │                      │  │   │   │                  │   │      │   10.0.2.0 / 24   │      │   │     │
+      │     │  │  │  └────────────────┘    │       │  └──────────────────────┘  │   │   │                  │   │      └───────────────────┘      │   │     │
+      │     │  │  │ us-west1               │       │ us-east1                   │   │   │                  │   │              ....               │   │     │
+      │     │  │  └────────────────────────┘       └────────────────────────────┘   │   │                  │   │      ┌───────────────────┐      │   │     │
+      │     │  │                                                                    │   │                  │   │      │   10.0.30.0 / 24  │      │   │     │
+      │     │  └────────────────────────────────────────────────────────────────────┘   │                  │   │      └───────────────────┘      │   │     │
+      │     │                                                                           │                  │   │                                 │   │     │
+      │     └───────────────────────────────────────────────────────────────────────────┘                  │   └─────────────────────────────────┘   │     │
+      │                                                                                                    └─────────────────────────────────────────┘     │
+      └────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+
+## HA VPN 
+ - Provides 99.99% SLA
+      - must configure 2 or 4 tunnels from on-prem to cloud
+ - Google Cloud automatically chooses two external IP addr
+ - Each interface supports multiple tunnels
+ - VPN Tunnels connect to HA VPN gateway MUST USE DYNAMIC (BGP) Routing **
+ - Can be active / active or active / passive
+
+ - Site to SIte topologies:
+    - HA VPN Gateway to peer VPN device 
+    - HA VPN Gateway to  AWS Virtual Private Gateway
+    - Two HA VPN Gateways to each other
+
+
+
+## Dynamic Routing w/ Cloud Router
+  - Must have Link Local IP Addresses to setup BGP connectivity
+      169.254.0.0 / 16  ***
+
+  - Used for establishing BGP sessiong
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.  
