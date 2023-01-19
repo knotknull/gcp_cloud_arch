@@ -3278,6 +3278,99 @@ Cloud VPN between Direct Peering and Carrier Peering
 
 
 
+## Cloud Interconnect
+
+# Dedicated Interconnect 
+  - connections between on-prem and GCP 
+  - provision cross-connect between on-prem and Colo 
+  - configure BGP connection between cloud router and on prem router
+
+my-network (my-project1)
+
+[us-cetral1 10.128.0.0 / 20 ]                                           On-prem Network        Subnet: 192.168.0.0 / 24
+
+[  Compute ]   <-->  [Cloud Router]  <------> [Colo Facility]         [On-prem Router ] <-->  [On-prem Router ]        
+[10.128.0.2]         [169.254.10.1]           [    Google   ] <-----> [ 169.254.10.2  ]       [ 192.168.0.11  ]        
+                      (BGP Addr)              [Peering Edge ]            (BGP Addr)
+                                                    
+
+# Partner Interconnect 
+ - connectivity throught a supported service provider 
+
+[  Compute ] <--> [Cloud Router]  <---> [Colo Facility]        [ Service ]       [On-prem Router ] <-->  [On-prem Router ]        
+[10.128.0.2]      [169.254.10.1]        [    Google   ] <--->  [ Provider] <---> [ 169.254.10.2  ]       [ 192.168.0.11  ]        
+                   (BGP Addr)           [Peering Edge ]        [ Network ]        (BGP Addr)
+                                                    
+# Interconnect options  *******
+
+Connection                      Provides                      Capacity  ***         Requirements          Access Type
+-------------                  -------------                  -------------         -------------         -------------  
+IPsec VPN Tunnel              Encrypted tunnel to VPC         1.5 - 3 Gbps        On-prem VPN gateway     Internal IP Addr
+                              networks throught the           per tunnel 
+                              public internet
+
+Dedicated Interconnect        Dedicated, direct connection    10 Gbps per link     Connection in          Internal IP Addr 
+                              to VPC networks                 100 Gbps (beta)      colocation facility
+
+Partner Interconnect          Dedicated bandwidth,            50 Mbps - 10 Gbps     Service Provider      Internal IP Addr
+                              connection to VPC network       per connection
+                              thru a service provider  
+
+## Peering
+
+# Direct Peeting
+  - provides direct connection to GCP
+  - Exchange BGP Routes
+  - No SLA
+  - via Edge Points of Presence (PoPs)
+
+# Carrier Peeting
+  - via Carrier partner
+  - reach all Google's services
+  - Partner requirements
+  - No SLA
+
+
+# Peering options  *******
+
+Connection              Provides                      Capacity  ***         Requirements       Access Type
+-------------          -------------                  -------------         -------------      -------------  
+Direct Peering       Dedicated, direct connection     10 Gbps per link      Connection in      Public IP Addr
+                     to Google's network                                    GCP PoPs
+
+Carrier Peering      Peering through service          Varies based on       Service PRovider   Public IP Addr
+                     provider to Google's             partner offering  
+                     public network
+
+
+
+## Sharing VPC Networks
+
+# Shared VPC
+  - connect resources from multiple projects to common VPC network
+  - dedicate project as host project and connect other projects to it
+
+# VPC Peering 
+  - Private RFC 1918 connectivity across 2 VPC netowrks
+   [ VPC Consumer ] <-- private ip addr --  [ VPC Producer ] 
+   [     Network  ] -- private ip addr -->  [     Network  ] 
+
+
+
+# Shared VPC  vs.  VPC Peering 
+
+Consideration           Shared VPC          VPC Netowrk Peering
+-------------          -------------        --------------------  
+Across organization        No                     Yes
+Within Project             No                     Yes
+Network Admin            Centralized           Decentralized
+
+
+
+#################################
+## Load Balancing and Autoscaling
+
+
 
 
 .  
