@@ -3370,6 +3370,112 @@ Network Admin            Centralized           Decentralized
 #################################
 ## Load Balancing and Autoscaling
 
+## Global / regional load balancer
+
+   Global            Regional 
+-------------     --------------------  
+  - HTTP(S)        - Internal TCP / UDP
+  - SSL proxy      - Network  TCP / UDP
+  - TCP procy      - Internal HTTP(S)
+
+
+
+## Managed Instance Groups
+  - collection of identical VM instances
+  - control with instance template
+  - update all instances with new template
+  - can scale automatically
+  - can work with load balancers
+
+  [Web VM 1 ] --+
+  [Web VM 2 ] --|+------ [ Server Instance Template ]
+  [Web VM 3 ] --+
+
+1. Create Instance template
+2. Create manage Instance Group of N instances
+      - name, single/multi zone / location, instance template, autoscaling, autohealing 
+
+
+#  Autoscaling and health checks 
+ - dynamically add / remove instance 
+ - increase / decrease load
+
+# Autoscaling Policy 
+ - CPU Utilization 
+ - Load balancing capacity
+ - Monitoring Metris 
+ - Queue based workload
+
+# Healthcheck
+ - Protocol, port, health criteria
+ - check interval,    timeout
+ - healthy threshold, unhealthy threshold
+
+## HTTP(S) Load Balancing
+ - Layer 7
+ - Global load balancing
+ - Anycast IP Addr
+ - HTTP or 80 or 8080 
+ - HTTPS on 443
+ - Autoscaling 
+ - URL maps
+
+HTTP(S) Load Blancer Architecture
+
+[Going Forward Rule] <---------- [Internet]
+        |
+        v                                           +--------> [Instance Grp - VM 1]
+[  Target Proxy    ]   +-->  [  Backend Service ] --+--------> [Instance Grp - VM 2]
+        |              |              |             +--------> [Instance Grp - VM 3]
+        v              |              v
+[  URL Map         ] --+     [    Health Check  ] 
+
+# Backend Services 
+  - Health Check
+  - Session affinity 
+  - Timeout Setting  (30 sec default) ***
+  - One or more baackeends
+      - instance group
+      - balancing mode
+      - capacity scaler
+
+# HTTP(S) Load Balancing
+  - Target HTTP(S) proxy
+  - one signed SSL certificate installed (min)
+      - up to 15 SSL certs per target proxy
+  - Client SSL session terminates at load balancer
+  - Support the QUIC transport layer protocol
+
+# Backend buckets 
+  - HTTPS load blancers uses URL Map to cloud storage bucket 
+
+# Network Endpoint Group (NEG)
+  - config object that specifies grou of backent endpoints / services
+  - 4 types of NEGs
+      - Zonal 
+      - Internet - single endpoint outside of GCP 
+      - Serverless - points to: 
+              - CloudRun 
+              - AppEngin
+              - CloudFunction
+      - Hybrid connectivity - Traffic Connector services outside of GCP
+
+
+## Cloud CND
+## SSL Proxy / TCP Proxy Load Balancing
+## Network Load Balncing
+## Internal Load Balancing
+
+
+
+
+
+
+
+
+
+
+
 
 
 
