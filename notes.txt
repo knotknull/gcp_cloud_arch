@@ -3462,13 +3462,90 @@ HTTP(S) Load Blancer Architecture
 
 
 ## Cloud CDN
+  - Content Delivery Network
+  - Cached at Points of Presence on Google Network
+  - Check box on HTTP(S) Load Balancer setup
+
+# Cloud CDN cache modes 
+  - control factors of when content is cached / 3 modes:  ***
+    - USE_ORIGIN_HEADERS
+    - CACHE_ALL_STATIC
+    - FORCE_CACHE_ALL
+
+
 ## SSL Proxy / TCP Proxy Load Balancing
-## Network Load Balncing
-## Internal Load Balancing
+# SSL proxy load balancing
+    - Global load balancing for encrypted, non-HTTP traffic
+    - Terminates SSL session at load balancing layer
+        - can be in multiple regions
+    - IPv4 or IPv6 clients
+    - Benefits: 
+        - Intelligent routing
+            - can route to where capacity is
+        - Certificate mgmt
+            - update certificate in one place
+            - self signed certs
+        - Security Patching
+            - patch load balancer automatically
+        - SSL Policies
+
+# TCP Proxy Load Balancing
+    - Global load balancing for unencrypted, non-HTTP traffic
+    - Terminates TCP session at load balancing layer
+        - forwards to VMs using TCP or SSL
+        - can be in multiple regions
+    - IPv4 or IPv6 clients
+    - Benefits: 
+        - Intelligent routing
+        - Security Patching
+
+## Network Load Balancing
+  - Regional, non-proxied load balancer
+      - Traffic load balanced between VMs IN SAME REGION
+  - Fowarding Rules 
+      - based on IP protocol data 
+          - address / port / protocol type
+  - Traffic 
+      - UDP
+      - TCP / SSL ports
+  - Architecture:
+      - Backend service-based
+      - Target pool-based
+
+# Backend service-based architecture
+  - Regional backend service
+  - Defines load balancer and how to distribute traffice to Backend Instance Groups
+  - Enables new features not supported with legacy target pools
+      - Non-legacy health checks
+      - Autoscaling w/ managed instance groups
+      - Connection draining
+      - Configurable failover policy
+     
+# Target pool-based architecture
+  - Forwarding rules (TCP and UDP)
+  - Up to 50 per project
+  - One health check
+  - Instances must be in the same region
 
 
 
+## Internal TCP / UDP Load Balancing
+  - Regional, private load balancing 
+      - VM instances in same region
+      - RFC 1918 IP addr
+  - TCP / UDP traffic
+  - Reduced latency, simpler config
+  - Software-defined, fully distributed load balancing
 
+
+
+# Internal HTTP(S) load balcning
+  - Proxy-based, Regional, private load balancing 
+      - Layer 7 balancer
+      - VM instances in same region
+      - RFC 1918 IP addr
+  - HTTP, HTTPS, HTTP/2
+  - Based on open source Envoy proxy
 
 
 
