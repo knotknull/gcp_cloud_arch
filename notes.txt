@@ -3434,7 +3434,7 @@ HTTP(S) Load Blancer Architecture
   - Health Check
   - Session affinity 
   - Timeout Setting  (30 sec default) ***
-  - One or more baackeends
+  - One or more backeends
       - instance group
       - balancing mode
       - capacity scaler
@@ -3461,7 +3461,7 @@ HTTP(S) Load Blancer Architecture
       - Hybrid connectivity - Traffic Connector services outside of GCP
 
 
-## Cloud CND
+## Cloud CDN
 ## SSL Proxy / TCP Proxy Load Balancing
 ## Network Load Balncing
 ## Internal Load Balancing
