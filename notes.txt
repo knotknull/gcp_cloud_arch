@@ -3539,7 +3539,7 @@ HTTP(S) Load Blancer Architecture
 
 
 
-# Internal HTTP(S) load balcning
+# Internal HTTP(S) load balancing
   - Proxy-based, Regional, private load balancing 
       - Layer 7 balancer
       - VM instances in same region
@@ -3548,7 +3548,62 @@ HTTP(S) Load Blancer Architecture
   - Based on open source Envoy proxy
 
 
+## Choosing a load balancer
+   - IPv6 client load balancing support
+      - HTTP(S)
+      - SSL Proxy
+      - TCP Proxy
 
+
+            [        External         ]                               [           Internal          ]      
+            [ Internet-to-GCP traffic ]                               [ GCP Inst-to-Inst / RFC 1918 ]      
+                         |                                                             |                 
+        +---------------------------------+                           +-----------------------------------------------+
+        |                |                |                           |                              |                |
+        v                v                v                           v                              v                v
+  [HTTP / HTTPS]     [   TCP   ]     [   UDP   ]                 [   TCP   ]                   [   UDP   ]     [HTTP / HTTPS]     
+  [  traffic   ]     [ traffic ]     [ traffic ]------+          [ traffic ]                   [ traffic ]     [  traffic   ]
+        |                 |                           |               |                           |                     |
+        |                 |                           |               +---------------------------+                     |
+        |                 |                           |                                           |                     |
+        |           [SSL Offload]--No------+          +------------->[IPv6 Clients]--+            |                     |
+        |                 |                |                         [ Global LB  ]  |            |                     |
+        |                 |           [Global LB / IPv6]                      |      |            |                     |
+        |                 |           [ no SSL offload ]---No---+             No    Yes           |                     |
+        |                 |              |                      |             |      |            |                     |
+        |                Yes             |                  [ Preserve ]      |      v            |                     |
+        |                 |             Yes  +---------No---[Client IPs]      |    [NONE]         |                     |
+        |                 |              |   |                    +-Yes--+    |                   |                     |
+        |                 |              |   |                           |    v                   |                     |
++Global v  IPv4 / IPv6 ---V--------------v---v-----+          +-Regional v IPv4 / IPv6 -----------v---------------------v-----------------+
+|    [HTTP(S)]       [  SSL  ]          [  TCP  ]  |          |    [Network TCP/UDP ]       [ Internal TCP/UDP ]    [ Internal HTTP(S) ]  |
+|    [Load Bal]      [ Proxy ]          [ Proxy ]  |          |    [  Load Balancer ]       [   Load Balancer  ]    [   Load Balancer  ]  |
++----------------Global IPv4 / IPv6 ---------------+          +----------------Global IPv4 / IPv6 ----------------------------------------+
+
+
+
+
+
+#################################
+## Infrastructure Automation
+
+
+
+## Terraform
+## Google Cloud Marketplace
+
+
+
+
+
+
+
+
+
+
+
+#################################
+## Managed Services
 
 
 
