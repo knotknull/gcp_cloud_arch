@@ -3588,24 +3588,60 @@ HTTP(S) Load Blancer Architecture
 ## Infrastructure Automation
 
 
-
 ## Terraform
+ - Infrastructure as code (IaC)
+ - quick provisioning and removing of infrastructure
+    - create / destroy as needed 
+    - create identical dev, test, prod
+    - can be part of CI/CD pipeline
+    - manage complexity
+ - declare and creae GCP resources 
+    - compute engine 
+    - VPC 
+    - Cloud VPN 
+    - Cloud Load Balancing
+    - Cloud Router
+    - Cloud Firewall Rules
+ - Language
+    - Declarative
+    - Parallel Deployment 
+    - Template driven
+    - Repeatable deployment process
+    - Focus on the app
+ - Installed in Cloud Shell
+
+
+terraform init    # initialize configuration,  downloads provicer files
+terraform plan    # performs refresh, actions necessary to achieve desired state
+terraform apply   # creates infrastructure defined
+
+
 ## Google Cloud Marketplace
-
-
-
-
-
-
-
-
-
-
+  - deploy production-grade solutions
+  - single bill for Google Cloud and 3rd party services
+  - manage via Terraform
+  - notified on security update
+  - Direct access to partner support
 
 #################################
 ## Managed Services
 
+## BigQuery
+  - serverless, scalable, cost-effective cloud data warehouse
+  - fully managed
+  - petabyte scale
+  - SQL interfacd
+  - Very Fast
+  - access via:
+      - cloud console
+      - command line tool
+      - Big Query REST API
+          - use with Java, .Net, Python
 
+
+## Dataflow
+## Dataprep
+## Dataproc
 
 
 
