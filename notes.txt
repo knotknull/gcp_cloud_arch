@@ -1,6 +1,8 @@
 GCP Certified Professional Cloud Architect
 ---------------------------------
 Channels > My Channels > GCP Cloud Architect
+https://app.pluralsight.com/paths/certificate/cloud-architecture-with-google-cloud
+
 22 Hours
 List of courses:
 NOTE:  This course has been updated to 8 Video Courses / 26h 26m  
@@ -26,24 +28,24 @@ NOTE:  This course has been updated to 8 Video Courses / 26h 26m
 
 #############################################################################
 ## Essential Google Cloud Infrastructure: Core Services
- - Introduction
- - Identity and Access Management (IAM)
- - Storage and Database Services
- - Resource Management
- - Resource Monitoring
- - Course Resources
+ ✓ Introduction
+ ✓ Identity and Access Management (IAM)
+ ✓ Storage and Database Services
+ ✓ Resource Management
+ ✓ Resource Monitoring
+ ✓ Course Resources
 
 #############################################################################
 ## Essential Google Cloud Infrastructure: Scaling and Automation
- - Introduction
- - Interconnecting Networks 
- - Load Balancing and Autoscaling
- - Infrastructure Automation
- - Managed Services
- - Course Resources
+ ✓ Introduction
+ ✓ Interconnecting Networks 
+ ✓ Load Balancing and Autoscaling
+ ✓ Infrastructure Automation
+ ✓ Managed Services
+ ✓ Course Resources
 
 #############################################################################
-## Reliable Google Cloud Infrastructure: Design and Process
+## Reliable Google Cloud Infrastructure: Design and Process  (4h 23 m)
  - Introduction
  - Defining Services
  - Microservice Design and Architecture
@@ -57,14 +59,14 @@ NOTE:  This course has been updated to 8 Video Courses / 26h 26m
  - Course Resources
 
 #############################################################################
-## Getting Started with Google Kubernetes Engine 
+## Getting Started with Google Kubernetes Engine  (2h 50m)
  - Introduction
  - Introduction to Google Cloud
  - Introduction to Containers and Kubernetes
  - Kubernetes Architecture
 
 #############################################################################
-## Logging, Monitoring and Observability in Google Cloud
+## Logging, Monitoring and Observability in Google Cloud (4h 41m)
  - Introduction
  - Introduction to Monitoring in Google CLoud
  - Avoiding Customer Pain
@@ -79,7 +81,7 @@ NOTE:  This course has been updated to 8 Video Courses / 26h 26m
  - Course Resources
 
 #############################################################################
-## Preparing for the Professional Cloud Architect Exam
+## Preparing for the Professional Cloud Architect Exam (2h 33m)
  - Welcome to Preparing for the Professional Cloud Architect Exam
  - Sample Case Studies 
  - Designing and Implementing
@@ -3733,5 +3735,35 @@ https://storage.googleapis.com/cloud-training/archinfra/v2.2/on-demand/3.3_Infra
 
 Module 4: Managed Services
 https://storage.googleapis.com/cloud-training/archinfra/v2.2/on-demand/3.4_Managed_Services.pdf
+
+
+#############################################################################
+## Getting Started with Google Kubernetes Engine  (2h 50m)
+
+
+
+ ## Introduction to Google Cloud
+
+
+
+
+
+
+
+
+ ## Introduction to Containers and Kubernetes
+ ## Kubernetes Architecture
+
+
+
+
+
+
+
+
+
+
+
+
 
 .  
