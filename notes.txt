@@ -3630,7 +3630,7 @@ terraform apply   # creates infrastructure defined
   - serverless, scalable, cost-effective cloud data warehouse
   - fully managed
   - petabyte scale
-  - SQL interfacd
+  - SQL interface
   - Very Fast
   - access via:
       - cloud console
@@ -3638,13 +3638,100 @@ terraform apply   # creates infrastructure defined
       - Big Query REST API
           - use with Java, .Net, Python
 
-
 ## Dataflow
+  - serverless, fully managed data processing
+  - data transformation
+  - batch / stream w/ autoscale
+  - open source programming using Apache Beam
+  - scale to millions of queries per sec (??)
+  - tightly coupled with Stackdriver
+
+
+  [Cloud Pub/Sub] -------+
+                         |                                               +-->  [Cloud BigQuery]
+[Cloud Datastore] -------+ -----> [Stream] --+                           |
+                         |                    |--> [Cloud Dataflow] -----+-->  [AI Platform ]
+    [Apache Avro] -------+ ----->  [Batch] --+                           |
+                         |                                               +-->  [Cloud BigTable]
+   [Apache Kafka] -------+
+
+
 ## Dataprep
+  - visually explore, clean, prepare data for analysis / machine learning
+  - serverless, scales on demand
+  - suggests ideal tata transform
+  - focus on data analysis
+  - Integrated Partner Service: 
+      - operated by Trifacta
+
 ## Dataproc
+  - service for running Apache Spark and Apache Hadoop
+  - fully managed service
+  - fast start, scale, shutdowon (~90 sec avg)
+  - per-second billing
+  - low cost (per-second, preemptible)
+  - integrates w/ GCP 
+      -  BigTable
+      -  BigQuery
+
+  Dataflow vs. Dataproc
+
+          Yes     [ Dependencies on specific     ]   No
+      +---------- [ tools/packages in the Apache ]----------+ 
+      |           [ Hadoop / Spark ecosystem ?   ]          |
+      |                                                     | 
+      |                                                     | 
+      |               +---------------------- [ Do you prefer the manual or        ]  ---- automatic --+
+      v               |                       [ automatic provisioning of clusters ]                   |
+ [ DataProc ] <-------+                                                                              [Dataflow] 
 
 
 
 
+Validate your hands-on Google Cloud skills and advance your career with the Associate Cloud
+Engineer certification. Certification can help you gain credibility and give you an advantage in
+today’s highly competitive market. The Associate Cloud Engineer certification is for individuals
+who want to demonstrate their ability to deploy applications, monitor operations, and maintain
+cloud projects on Google Cloud. It is recommended that you have at least 6 months of hands-on
+experience working with Google Cloud. The exam will assess your ability to:
+  ● Set up a cloud solution environment
+  ● Plan and configure a cloud solution
+  ● Deploy and implement a cloud solution
+  ● Ensure successful operation of a cloud solution
+  ● Configure access and security
+
+I recommend broadening your knowledge by completing the following Qwiklabs Self-Paced
+Labs, which are single-topic hands-on activities; and Qwiklabs Quests, which are groups of
+self-paced labs on a focused theme:
+  ● Quest: Kubernetes in Google Cloud             https://google.qwiklabs.com/quests/29
+  ● Quest: Google Kubernetes Engine Best Practices: Security  https://google.qwiklabs.com/quests/64
+  ● Self-Paced Lab: Cloud Functions - Qwik Start  https://google.qwiklabs.com/focuses/1763?catalog_rank=%7B%22rank%22%3A1%2C%22num_filters%22%3A0%2C%22has_search%22%3Atrue%7D&parent=catalog&search_id=3434733
+  ● Quest: Application Development - Java         https://google.qwiklabs.com/quests/42
+  ● OR Quest: Application Development - Python    https://google.qwiklabs.com/quests/41
+
+To help you structure your preparation for the Associate Cloud Engineer exam, we recommend
+the Preparing for the Associate Cloud Engineer Examination course.   https://googlecourses.qwiklabs.com/course_templates/77
+
+You can also prepare using the Official Google Cloud Certified Associate Cloud Engineer Study Guide  https://www.wiley.com/en-us/Official+Google+Cloud+Certified+Associate+Cloud+Engineer+Study+Guide-p-9781119564416
+Guide, published by Wiley. Visit the Google Cloud Certification website for more information and
+to register     https://cloud.google.com/certification/cloud-engineer?utm_source=coursera&utm_medium=email&utm_campaign=spec_congrats
+
+
+
+
+Resources 
+
+Module 1: Interconnecting Networks
+https://storage.googleapis.com/cloud-training/archinfra/v2.2/on-demand/3.1_Interconnecting_Networks.pdf
+
+
+Module 2: Load Balancing and Autoscaling
+https://storage.googleapis.com/cloud-training/archinfra/v2.2/on-demand/3.2_Load_Balancing_and_Autoscaling.pdf
+
+Module 3: Infrastructure Automation
+https://storage.googleapis.com/cloud-training/archinfra/v2.2/on-demand/3.3_Infrastructure_Automation.pdf
+
+Module 4: Managed Services
+https://storage.googleapis.com/cloud-training/archinfra/v2.2/on-demand/3.4_Managed_Services.pdf
 
 .  
