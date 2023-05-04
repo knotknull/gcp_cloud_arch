@@ -3737,8 +3737,51 @@ Module 4: Managed Services
 https://storage.googleapis.com/cloud-training/archinfra/v2.2/on-demand/3.4_Managed_Services.pdf
 
 
+
+
+#############################################################################
+## Getting Started with Google Kubernetes Engine 
+#############################################################################
+
+
+
 #############################################################################
 ## Getting Started with Google Kubernetes Engine  (2h 50m)
+ - Introduction
+ - Introduction to Google Cloud
+ - Introduction to Containers and Kubernetes
+ - Kubernetes Architecture
+
+
+
+
+
+
+#############################################################################
+## Reliable Google Cloud Infrastructure: Design and Process  (4h 23 m)
+ - Introduction
+ - Defining Services
+ - Microservice Design and Architecture
+ - DevOps Automation
+ - Choosing Storage Solutions
+ - Google Cloud and Hybrid Network Architecture
+ - Deploying Applications to Google Cloud
+ - Designing Reliable Systems
+ - Security
+ - Maintenance and Monitoring
+ - Course Resources
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
