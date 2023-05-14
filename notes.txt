@@ -3746,8 +3746,7 @@ https://storage.googleapis.com/cloud-training/archinfra/v2.2/on-demand/3.4_Manag
 ## Introduction to Google Cloud
 ## 
 NOTE:  I'm going to blow past all of the intro material because I've alerady reviewd it !!
-
-MAP LAST HERE:  stopped at Lab: Accessing the Google Cloud Platform
+Just a rehash of the Google Cloud UI and CloudShell
 
 ## Introduction to Containers and Kubernetes
 ## 
