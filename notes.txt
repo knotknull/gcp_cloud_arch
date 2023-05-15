@@ -3752,25 +3752,81 @@ Just a rehash of the Google Cloud UI and CloudShell
 ## 
 
 
+# Introduction to Containers 
+#
+conatiners: isolated user spaces from running application code
+
+# Containers and images 
+
+image: application + dependencies
+
+containers utilize linux tech:
+  - processes
+  - linux namespaces
+  - cgroups: resource control for apps 
+  - union file systems:  encapsulate apps and deps
+ 
+Container structure in layers
+
+[Dockerfile]
+From ubuntu:18.04
+copy ./app
+run make /app
+CMD python /app/app.py 
+
+[Image]
+
++---------------------------------------------------------+
+|                Thin Read / Write Layer                  |    <-- Container Layer (ephemeral)
++---------------------------------------------------------+
++---------------------------------------------------------+
+|                                                         |
+|   --------------------------------------------------    |
+|   |  python /app/app.py    run applicatin      0B  |    |
+|   --------------------------------------------------    |
+|                                                         |
+|   --------------------------------------------------    |
+|   |  run make /app     build application   1.89KB  |    |
+|   --------------------------------------------------    |    <-- Base Image Layers
+|                                                         |
+|   --------------------------------------------------    |
+|   |  copy ./app    application data        195 KB  |    |
+|   --------------------------------------------------    |
+|                                                         |
+|   --------------------------------------------------    |
+|   | base image layer RO:  ubuntu: 18.04    188 MB  |    |
+|   --------------------------------------------------    |
+|                                                         |
++---------------------------------------------------------+
+
+
+gcr.io:  google container registry
+
+container builds:
+  - docker
+  - Cloud Build
+
+
+
+# Introduction to Kubernetes 
+#
+
+MAP LAST HERE
+
+
+
+
+
+
+
+
+
+
 
 
  - Kubernetes Architecture
  - Introduction to Kubernetes Workloads 
  - Course Resources 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
