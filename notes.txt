@@ -3806,10 +3806,57 @@ container builds:
   - docker
   - Cloud Build
 
+# build via Dockerfile:
+gcloud builds submit --tag gcr.io/${GOOGLE_CLOUD_PROJECT}/quickstart-image .
+
+
+# build via yaml:
+gcloud builds submit --config cloudbuild.yaml .
+
 
 
 # Introduction to Kubernetes 
 #
+
+Kubernetes: Conter Management Environment
+  - IaaS
+  - Declarative config: describe "desired state"
+      - allows Imperative config
+
+  - stateful / sateless apps
+  - batch jobs / daemon tasks
+  - autoscaling
+  - resource limits
+  - extensibility
+  - portability
+    - on prem / off prem
+
+
+
+# Introduction to Google Kubernetes Engine (GKE)
+#
+Managed Kubernetes service
+ - part of "GCP Compute"
+ - fully managed
+ - container optimized OS
+ - auto upgrade
+ - auto repair
+    - nodes: VMs that host containers in GKE cluster
+    - GKE auto repair: repairs unhealty nodes
+ - cluster scaling
+ - integrates with google cloud build / container registry
+ - integrates w/ IAM
+ - integrated logging / monitory
+    - was called Stackdriver
+    - is now called Google Cloud's operation suite
+ - integrated networking (VPCs, etc.)
+ - utilizes Cloud Console
+    - dashboard for Kubernetes cluster
+
+
+# Computing Options
+
+
 
 MAP LAST HERE
 
